@@ -27,6 +27,7 @@ Una vez entendida la estructura, se puede borrar esta seccion del readme.
     - partials
     - vendor
 * .gitignore
+* cabecera.php
 * config.rb
 * galeria.php
 * guia.php
@@ -34,6 +35,7 @@ Una vez entendida la estructura, se puede borrar esta seccion del readme.
 * index.php
 * instalar.php
 * login.php
+* pie-pagina.php
 * usuario.php
 * usuarios.php
 
