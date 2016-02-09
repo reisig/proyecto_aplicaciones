@@ -60,7 +60,7 @@ $imagenes = array(
 
 			<div class="contenedor-imagenes">
 
-				<div class="imagenes grid">
+				<div class="imagenes grid" itemscope itemtype="http://schema.org/ImageGallery">
 
 					<?php foreach ($imagenes as $imagen): 
 						$info_imagen = getimagesize('repositorio/'. $imagen);
@@ -73,14 +73,84 @@ $imagenes = array(
 								<img src="<?php echo 'repositorio/'. $imagen; ?>" itemprop="thumbnail" alt="Image description" />
 							</a>
 
-							<figcaption itemprop="caption description">Image caption  1</figcaption>
+							<figcaption class="detalles" itemprop="caption description">
+
+								<div class="detalle"><strong>Preparacion de: </strong><span>Epidermis inferior de hoja</span></div>
+								<div class="detalle"><strong>Tinción usada: </strong><span>Hematoxilina-eosina</span></div>
+								<div class="detalle"><strong>Diámetro del campo: </strong><span>1500 µ</span></div>
+								<div class="detalle"><strong>Aumento total: </strong><span>100x</span></div>
+								<div class="detalle"><strong>Autor: </strong><span>Juan Perez</span></div>
+								<div class="detalle"><strong>Fecha: </strong><span>20/01/2016</span></div>
+
+							</figcaption>
 
 			    		</figure>
-
 
 	    			<?php endforeach; ?>
 
 				</div>
+
+				<!-- Visor de imagenes. -->
+				<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+				    <!-- Fondo del visor de imagenes. -->
+				    <div class="pswp__bg"></div>
+
+				    <div class="pswp__scroll-wrap">
+
+				        <!-- Contenedor de slides. PhotoSwipe mantiene solo 3 slides en el  DOM para ahorrar memoria. -->
+				        <div class="pswp__container">
+				            <div class="pswp__item"></div>
+				            <div class="pswp__item"></div>
+				            <div class="pswp__item"></div>
+				        </div>
+
+				        <!-- Interfaz grafica por defecto de Photoswipe. -->
+				        <div class="pswp__ui pswp__ui--hidden">
+
+				            <div class="pswp__top-bar">
+
+				                <!--  Controles del visor. -->
+
+				                <div class="pswp__counter"></div>
+
+				                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+				                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+				                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+				                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+				                <!-- Preloader -->
+				                <div class="pswp__preloader">
+				                    <div class="pswp__preloader__icn">
+				                      <div class="pswp__preloader__cut">
+				                        <div class="pswp__preloader__donut"></div>
+				                      </div>
+				                    </div>
+				                </div>
+				            </div>
+
+				            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+				                <div class="pswp__share-tooltip"></div> 
+				            </div>
+
+				            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+				            </button>
+
+				            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+				            </button>
+
+				            <div class="pswp__caption">
+				                <div class="pswp__caption__center"></div>
+				            </div>
+
+				          </div>
+
+				        </div>
+
+				</div> <!-- fin pswp -->
 
 			</div> <!--fin imagenes -->
 
