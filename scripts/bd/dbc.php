@@ -76,3 +76,5 @@ class dbc extends PDO
   $this->dbconn = null;
  }
 }
+
+?>
