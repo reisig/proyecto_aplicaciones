@@ -1,3 +1,0 @@
-cat .gitignore
-*sftp-config.json
-*.sass-cache
