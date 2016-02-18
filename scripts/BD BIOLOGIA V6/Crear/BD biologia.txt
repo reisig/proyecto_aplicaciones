@@ -1,0 +1,22 @@
+pass = 1234 or appinternet
+
+/*Crear base de datos*/
+mysql -u root -p -h localhost
+create database biologia;
+show databases;
+quit
+
+/*Importar tablas*/
+mysql -u root -p biologia < /ruta/biologiav3.sql //ruta = importar el archivo al servidor 
+
+
+/*Verificar tablas*/
+mysql -u root -p -h localhost biologia;
+show tables;
+describe 'tabla';  //tabla = seleccionar alguna de la lista
+quit
+
+/*Crear usuario BD : en caso de no existir*/
+
+mysql -u root -p biologiav3 < /ruta/usuarioBD.sql //ruta = importar el archivo al servidor 
+
