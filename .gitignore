@@ -1,3 +1,5 @@
 cat .gitignore
 *sftp-config.json
-*.sass-cache
+.sass-cache
+.sass-cache/*
+bd/config.php

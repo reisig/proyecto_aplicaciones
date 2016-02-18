@@ -1,5 +1,9 @@
 /**
  *	Archivo que inicializa todas las dependencias del tema.
+ *
+ * INDICE
+ *
+ *
  */
 
 //visor de imagenes para la galeria.
