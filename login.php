@@ -6,7 +6,7 @@
     <!-- Inicio del encabezado HTML                                   --> 
 <head>
 <title> Login </title>
-<link rel="stylesheet" type="text/css" href="estilos2.css">
+<link rel="stylesheet" type="text/css" href="css/estilos2.css">
 <style>
 p {color:black; width:80%; margin-left:20px;}
 </style>
@@ -18,7 +18,7 @@ p {color:black; width:80%; margin-left:20px;}
 <div class="container"> 
 
 <h1> Acceso a Plataforma </h1>
-<form name="nombre_usuario" action="verifica.php" method="post">
+<form name="nombre_usuario" action="scripts/verifica.php" method="post">
 
   <div class="form-group">
     Usuario: <input type="email" name="correo" class="form-control" id="email">

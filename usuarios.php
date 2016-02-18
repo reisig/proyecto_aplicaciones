@@ -21,7 +21,7 @@
       
       <h1> Agregar Profesor </h1>
 
-      <form name="agrega_profesor" action="agrega.php" method="post">
+      <form name="agrega_profesor" action="scripts/agrega.php" method="post">
 
         <div class="form-group">
           
