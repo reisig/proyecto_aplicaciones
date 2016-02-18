@@ -9,22 +9,7 @@
 /*Gran parte del codigo de este archivo no es el codigo final, solo se hizo para
   probar la pagina. */
 
-$imagenes = array(
-	'09.jpg', 
-	'26rukcells_v1.jpg', 
-	'Arbuscular_mycorrhiza_microscope.jpg', 
-	'cell death 1.jpg', 
-	'Cells-under-a-microscope.jpg', 
-	'Fat cell.jpg', 
-	'gol.ap in nerve cell silver stain.jpg', 
-	'IMG_20140211_135459_435.jpg', 
-	'img027.jpg', 
-	'Neotyphodium_coenophialum.jpg', 
-	'nueron_moto_nerve_cell1329245097781.png', 
-	'onion_skin.jpg', 
-	'tissue-10.jpg', 
-	'yKKqrFI.jpg', 
-	);
+require_once( 'scripts/imagen/funciones-galeria.php' );
 
  ?>
 
@@ -34,6 +19,8 @@ $imagenes = array(
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>Repositorio Biologia</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/photoswipe.css">
 	<link rel="stylesheet" type="text/css" href="css/default-skin/default-skin.css">
@@ -55,40 +42,53 @@ $imagenes = array(
 
 			<div class="contenedor-filtros">
 
+				<div class="container">
+
+					<div class="despegable">
+
+						<h2 class="titulo">Realizar búsqueda por filtros</h2>
+
+					</div>
+
+					<div class="filtros-interior">
+
+						<form id="busqueda" method="get">
+
+							<span class="todos">Marcar todos filtros</span>
+
+							<!-- indica si se busca por todos los filtros -->
+							<input type="hidden" name="todos" value="0">
+
+							<!-- indica el numero de pagina a mostrar (offset) -->
+							<input type="hidden" name="offset" value="0">
+
+							<div class="row">
+
+								<div class="col-sm-9">
+
+									<?php filtros(obtener_filtros()); ?>
+
+								</div>
+
+								<div class="filtros col-sm-3">
+
+								</div>
+
+								<div class="col-xs-12"><button type="submit" form="busqueda" value="Submit"><i class="fa fa-search"></i> Realizar Búsqueda</button></div>
+
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
 
 			</div>
 
 			<div class="contenedor-imagenes">
 
-				<div class="imagenes grid" itemscope itemtype="http://schema.org/ImageGallery">
-
-					<?php foreach ($imagenes as $imagen): 
-						$info_imagen = getimagesize('repositorio/'. $imagen);
-					?>
-
-
-						<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-sm-3">
-
-							<a href="<?php echo 'repositorio/'. $imagen; ?>" itemprop="contentUrl" data-size="<?php echo $info_imagen[0]; ?>x<?php echo $info_imagen[1]; ?>">
-								<img src="<?php echo 'repositorio/'. $imagen; ?>" itemprop="thumbnail" alt="Image description" />
-							</a>
-
-							<figcaption class="detalles" itemprop="caption description">
-
-								<div class="detalle"><strong>Preparacion de: </strong><span>Epidermis inferior de hoja</span></div>
-								<div class="detalle"><strong>Tinción usada: </strong><span>Hematoxilina-eosina</span></div>
-								<div class="detalle"><strong>Diámetro del campo: </strong><span>1500 µ</span></div>
-								<div class="detalle"><strong>Aumento total: </strong><span>100x</span></div>
-								<div class="detalle"><strong>Autor: </strong><span>Juan Perez</span></div>
-								<div class="detalle"><strong>Fecha: </strong><span>20/01/2016</span></div>
-
-							</figcaption>
-
-			    		</figure>
-
-	    			<?php endforeach; ?>
-
-				</div>
+				<?php echo obtener_imagenes_galeria(obtener_imagenes(array(), 14, 0)); ?>
 
 				<!-- Visor de imagenes. -->
 				<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -152,7 +152,13 @@ $imagenes = array(
 
 				</div> <!-- fin pswp -->
 
-			</div> <!--fin imagenes -->
+			</div> <!--fin contenedor-imagenes -->
+
+			<div class="contenedor-paginacion">
+
+				<?php echo obtener_paginacion_galeria(obtener_total_imagenes(), 14, 1); ?>
+
+			</div>
 
 		</main>
 
