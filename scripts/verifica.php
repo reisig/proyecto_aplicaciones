@@ -32,12 +32,13 @@ if($row = $stmt->fetch()){
 		echo "bienvenido ".$row['tipo']."," .$row['nombre'].".";
 	} else {
 		echo "bienvenido ".$row['tipo']."," .$row['nombre'].".";
-		header('location:usuarios.php');
+		header('location:/proyecto_aplicaciones/usuarios.php');
 	}
 
 	
 }else{
-?><!-- Este es un comentario en HTML                                -->
+?>
+<!-- Este es un comentario en HTML                                -->
 <!-- Declaración de tipod e documento                             -->
 <!DOCTYPE html>
 <!-- Inicio del código HTML                                       --> 
@@ -57,7 +58,7 @@ p {color:black; width:80%; margin-left:20px;}
 <body>
 
 	<p class=importante> Usuario no encontrado </p>
-	<p> <a href="proyecto_aplicaciones/login.php">Intentar nuevamente. </a> </p>
+	<p> <a href="/proyecto_aplicaciones/login.php">Intentar nuevamente. </a> </p>
 	
 
 
