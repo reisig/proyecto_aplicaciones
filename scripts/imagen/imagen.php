@@ -17,8 +17,9 @@ class Imagen{
     var $aumento; // define el aumento utilizado al tomar 
     var $ruta_dibujo; // ruta desde donde se carga el dibujo asociado a la imagen
     var $fecha; // fecha en que fue subida la imagen al repositorio
+    var $tamano; // tamaño de la imagen
     
-    function Imagen( $ruta, $rut_alumno, $descripcion_breve, $tipo_tenido, $preparacion, $aumento, $ruta_dibujo, $fecha)
+    function __construct( $ruta, $rut_alumno, $descripcion_breve, $tipo_tenido, $preparacion, $aumento, $ruta_dibujo, $fecha)
     {
         $this->ruta = $ruta;
         $this->rut_alumno = $rut_alumno;
@@ -28,6 +29,7 @@ class Imagen{
         $this->aumento = $aumento;
         $this->ruta_dibujo = $ruta_dibujo;
         $this->fecha = $fecha;
+        $this->tamano = getimagesize( $ruta );
     }
     
     
@@ -72,6 +74,11 @@ class Imagen{
         return $this->fecha;
     }
     
+    function get_tamano()
+    {
+        return $this->tamano;
+    }
+    
     // fin de las funciones get
     
     // Aqui inician las funciones set, en caso de ser necesario modificar alguna de las variables del objeto Imagen por si solos
@@ -114,6 +121,11 @@ class Imagen{
     function set_fecha( $fecha )
     {
         $this->fecha = $fecha;
+    }
+    
+    function set_tamano( $tamano )
+    {
+        $this->tamano = $tamano;
     }
     
     // fin de las funciones set
