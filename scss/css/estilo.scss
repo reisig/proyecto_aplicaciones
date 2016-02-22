@@ -2,4 +2,10 @@
  * Hoja de estilo de la pagina.
  */
 
+@import "compass";
+
+@import "../modules/variables";
+
+@import "../partials/base";
+
 @import "../partials/galeria";

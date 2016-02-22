@@ -1,0 +1,13 @@
+body {
+  font-family: 'Open Sans', "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: $font-size;
+  line-height: $line-height;
+  color: $color;
+  background-color: $background-color;
+}
+
+a {
+	&:hover {
+		text-decoration: none;
+	}
+}

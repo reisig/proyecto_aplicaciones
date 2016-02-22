@@ -1,174 +1,114 @@
 /**
  * Hoja de estilo de la pagina.
  */
-@import url(http://fonts.googleapis.com/css?family=Montserrat);
-
-#instalar{
-  margin: 0; padding: 0;
-  height: 100%;
-  /*Image only BG fallback*/
-  background: rgba(0,0,0,0.3);
-  background-color: rgba(0,0,0,0.3);
-
+body {
+  font-family: 'Open Sans', "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.78571em;
+  color: #1c1c1c;
+  background-color: #ffffff;
 }
 
-
-#instalar body{
-  font-family: montserrat, arial, verdana;
+a:hover {
+  text-decoration: none;
 }
-
-#mhead{
-  font-family: Georgia !important;
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  text-align: center; 
-  font-family: georgia;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  padding: 20px;
-} 
-
-#FormInstalacion{
-  width: 500px;
-  margin: 130px auto;
-  text-align: center;
-  position: relative;
-}
-
-#FormInstalacion fieldset {
-  background: white;
-  border: 0 none;
-  border-radius: 3px;
-  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-  padding: 20px 30px; 
-  box-sizing: border-box;
-  width: 80%;
-  margin: 0 10%;
-  
-  /*stacking fieldsets above each other*/
-  position: absolute;
-}
-
-/*Hide all except first fieldset*/
-#FormInstalacion fieldset:not(:first-of-type) {
-  display: none;
-}
-
-/*inputs*/
-#FormInstalacion input, #FormInstalacion textarea {
-  padding: 10px;
-  border:solid 1px #ccc; 
-  border-radius: 3px;
-  margin-bottom: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: montserrat;
-
-}
-
-#FormInstalacion input:focus{
-    outline: none !important;
-    border:1px solid #4145FF;
-}
-
-/*buttons*/
-#FormInstalacion .action-button {
-  width: 140px;
-  background: #4145FF;
-  color: white;
-  border: 0 none;
-  border-radius: 0px;
-  cursor: pointer;
-  padding: 10px 5px;
-  margin: 10px 5px;
-}
-
-#FormInstalacion .action-button:hover, #FormInstalacion .action-button:focus {
-  box-shadow: 0 0 0 2px white, 0 0 0 3px #4145FF;
-
-}
-/*headings*/
-.fs-title {
-  font-size: 15px;
-  text-transform: uppercase;
-  font-family: montserrat;
-  color: black;
-  margin-bottom: 10px;
-}
-.fs-subtitle {
-  font-weight: normal;
-  font-size: 15px;
-  font-family: montserrat;
-  color: black;
-  margin-bottom: 20px;
-}
-
-/*progressbar*/
-#progressbar {
-  margin-bottom: 20px;
-  overflow: hidden;
-  /*CSS counters to number the steps*/
-  counter-reset: step;
-}
-
-#progressbar li {
-  list-style-type: none;
-  color: rgb(0,0,0);
-  text-transform: uppercase;
-  font-family: montserrat;
-  font-size: 11px;
-  width: 30%;
-  float: left;
-  position: relative;
-}
-
-#progressbar li:before {
-  content: counter(step);
-  counter-increment: step;
-  width: 25px;
-  line-height: 25px;
-  display: block;
-  font-size: 15px;
-  font-family: montserrat;
-  color: black;
-  background: white;
-  border: 1px solid #ccc;
-  margin: 0 auto 5px auto;
-}
-/*progressbar connectors*/
-#progressbar li:after {
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: #4145FF;
-  position: absolute;
-  left: -50%;
-  top: 9px;
-  z-index: -1; /*put it behind the numbers*/
-}
-#progressbar li:first-child:after {
-  /*connector not needed before the first step*/
-  content: none; 
-}
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
-#progressbar li.active:before,  #progressbar li.active:after{
-  background: #4145FF;
-  border: 0px none;
-  color: white;
-}
-
 
 #galeria {
   position: relative;
   width: 100%;
+}
+#galeria .titulo {
+  font-size: 24px;
+  font-weight: 300;
+}
+#galeria .mostrar-filtros {
+  position: relative;
+  color: #fff;
+  background-color: #21a5db;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+#galeria .mostrar-filtros:hover {
+  cursor: pointer;
+  background-color: #108bbd;
+}
+#galeria .filtros {
+  position: relative;
+  background-color: #f9f9f9;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+#galeria #busqueda {
+  position: relative;
+}
+#galeria #busqueda .todos {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 20px;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+#galeria #busqueda .todos:hover {
+  color: #1ea1d6;
+}
+#galeria #busqueda .titulo-filtro {
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+#galeria #busqueda .lista-valores {
+  list-style: none;
+  padding-left: 0;
+}
+#galeria #busqueda .lista-valores .valor {
+  margin-bottom: 10px;
+}
+#galeria #busqueda .lista-valores .valor .icono {
+  display: none;
+  color: #21a5db;
+  padding-right: 10px;
+}
+#galeria #busqueda .lista-valores .valor:hover {
+  cursor: pointer;
+}
+#galeria #busqueda .lista-valores .valor:hover .texto {
+  color: #1ea1d6;
+}
+#galeria #busqueda .lista-valores .valor.seleccionado .icono {
+  display: inline;
+}
+#galeria #busqueda .lista-valores .valor .texto-otro {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+#galeria #busqueda .lista-valores .texto {
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+#galeria #busqueda .realizar-busqueda {
+  font-size: 30px;
+  font-weight: 400;
+  background-color: transparent;
+  border: none;
+  margin-top: 60px;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+#galeria #busqueda .realizar-busqueda:hover {
+  color: #21a5db;
 }
 #galeria .contenedor-imagenes {
   position: relative;
@@ -197,4 +137,37 @@
 }
 #galeria .contenedor-imagenes .grid .grid-item figcaption {
   display: none;
+}
+#galeria .contenedor-paginacion {
+  position: relative;
+  padding: 100px 0 60px 0;
+  text-align: center;
+}
+#galeria .contenedor-paginacion .paginacion {
+  position: relative;
+  display: inline-block;
+}
+#galeria .contenedor-paginacion .paginacion .pagina {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  color: #1c1c1c;
+  line-height: 40px;
+  border: 1px solid #c9c9c9;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-align: center;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: background-color 0.3s, color 0.3s, border 0.3s;
+  -o-transition: background-color 0.3s, color 0.3s, border 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s, border 0.3s;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+#galeria .contenedor-paginacion .paginacion .pagina:hover, #galeria .contenedor-paginacion .paginacion .pagina.actual {
+  color: #fff;
+  background-color: #21a5db;
+  border: 1px solid #21a5db;
 }

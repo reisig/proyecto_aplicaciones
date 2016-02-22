@@ -36,45 +36,55 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 </head>
 <body>
 
+	<?php $offset = obtener_offset(); ?>
+
 	<div class="envoltura">
 
 		<main id="galeria">
 
 			<div class="contenedor-filtros">
 
-				<div class="container">
+				<div class="mostrar-filtros" data-toggle="collapse" data-target="#collapse-filtros" aria-expanded="false" aria-controls="collapse-filtros">
 
-					<div class="despegable">
+					<div class="container">
 
-						<h2 class="titulo">Realizar búsqueda por filtros</h2>
+						<span class="busqueda-filtros titulo">Realizar búsqueda por filtros</span>
 
 					</div>
 
-					<div class="filtros-interior">
+				</div>
+
+				<div id="collapse-filtros" class="filtros collapse">
+
+					<div class="container">
 
 						<form id="busqueda" method="get">
 
-							<span class="todos">Marcar todos filtros</span>
+							<span class="todos titulo">Marcar todos los filtros</span>
 
 							<!-- indica si se busca por todos los filtros -->
 							<input type="hidden" name="todos" value="0">
 
 							<!-- indica el numero de pagina a mostrar (offset) -->
-							<input type="hidden" name="offset" value="0">
+							<input type="hidden" id="offset" name="offset" value="<?php echo $offset; ?>">
 
 							<div class="row">
 
-								<div class="col-sm-9">
+								<div class="col-sm-8">
 
 									<?php filtros(obtener_filtros()); ?>
 
 								</div>
 
-								<div class="filtros col-sm-3">
+								<div class="filtros col-sm-4">
+
+									<!-- filtro alumnos -->
+
+									<!-- filtro fecha -->
 
 								</div>
 
-								<div class="col-xs-12"><button type="submit" form="busqueda" value="Submit"><i class="fa fa-search"></i> Realizar Búsqueda</button></div>
+								<div class="col-xs-12"><button class="realizar-busqueda" type="submit" form="busqueda" value="Submit"><i class="fa fa-search"></i> Realizar Búsqueda</button></div>
 
 							</div>
 
@@ -88,7 +98,7 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 
 			<div class="contenedor-imagenes">
 
-				<?php echo obtener_imagenes_galeria(obtener_imagenes(array(), 14, 0)); ?>
+				<?php echo obtener_imagenes_galeria(obtener_imagenes($_GET, 14, $offset-1)); ?>
 
 				<!-- Visor de imagenes. -->
 				<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -156,7 +166,7 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 
 			<div class="contenedor-paginacion">
 
-				<?php echo obtener_paginacion_galeria(obtener_total_imagenes(), 14, 1); ?>
+				<?php echo obtener_paginacion_galeria(obtener_total_imagenes(), 14, $offset); ?>
 
 			</div>
 

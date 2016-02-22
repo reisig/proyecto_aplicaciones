@@ -8,6 +8,40 @@
  */
 
 /**
+ * Comprueba si el valor del filtro fue seleccionado.
+ *
+ * @return int
+ */
+function obtener_offset() {
+	$offset = 0;
+
+	//comrpobamos si existe la variable offset.
+	if( isset($_GET['offset']) ) {
+		return $_GET['offset'];
+	}
+}
+
+/**
+ * Comprueba si el valor del filtro fue seleccionado.
+ *
+ * @param string $id ID del filtro.
+ * @param string $valor Valor seleccionado del filtro.
+ * @return bool
+ */
+function comprobar_valor_filtro( $id, $valor ) {
+
+	//comprobamos si se ha seleccionado algun valor del filtro.
+	if( isset($_GET[$id]) ) {
+		//comprobamos si el valor fue seleccionado.
+		if( in_array($valor, $_GET[$id]) ) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+/**
  * Muestra una lista de checkboxs con los valores del filtro.
  *
  * @param string $id ID del filtro.
@@ -19,15 +53,54 @@ function filtro( $id, $filtro, $titulo = '' ) {
 	// verificamos que hayan un id y filtros y que este sea un array.
 	if( !empty($id) && !empty($filtro) && is_array($filtro) ): ?>
 
-		<h3 class="titulo"><?php echo $titulo; ?></h3>
+		<?php if( ! empty($titulo) ): ?>
 
-		<ul class="filtro">
+			<div class="titulo-filtro"><span><?php echo $titulo; ?></span></div>
+
+		<?php endif; ?>
+
+		<ul class="lista-valores">
 
 			<?php foreach ($filtro as $valor): ?>
 
-				<li class="valor">
+				<?php 
 
-					<input type="checkbox" class="<?php echo $id; ?>" name="<?php echo $id; ?>[]" value="<?php echo $valor; ?>"><span class="texto"><?php echo $valor; ?></span>
+					$otro = false;
+					if( strtolower($valor) == 'otro' ) {
+						$otro = true;
+					}
+
+					// comprobamos si es valor fue seleccionado.
+					$seleccionado = comprobar_valor_filtro($id, $valor); 
+
+				?>
+
+				<li class="valor <?php echo ($otro ? 'valor-otro' : ''); ?> <?php echo ($seleccionado ? 'seleccionado' : ''); ?>">
+
+					<input type="checkbox" class="entrada-valor <?php echo $id; ?>" name="<?php echo $id; ?>[]" value="<?php echo $valor; ?>" style="display: none;" <?php echo ($seleccionado ? 'checked' : ''); ?>>
+
+					<i class="icono fa fa-check"></i><span class="texto"><?php echo $valor; ?></span>
+
+					<?php if( $otro ): ?>
+
+						<?php 
+
+							// obtenemos el valor ingresado (si es que fue lom hubiera).
+							if( $seleccionado ) {
+								if( isset($_GET[$id]['valor_otro']) ) {
+									$valor = $_GET[$id]['valor_otro'];
+								} else {
+									$valor = '';
+								}
+							} else {
+								$valor = '';
+							}
+
+						 ?>
+
+						<input type="text" class="texto-otro <?php echo $id; ?>" name="<?php echo $id; ?>[valor_otro]" value="<?php echo $valor; ?>" placeholder="Escriba aquí" <?php echo ($seleccionado ? 'style="display: block;"' : 'style="display: none;"'); ?>>
+
+					<?php endif; ?>
 
 				</li>
 
@@ -59,7 +132,7 @@ function filtros( $filtros ) {
 
 			<?php endif; ?>
 
-			<div class="filtros col-sm-6"><?php filtro($id, $filtro['valores'], $filtro['titulo']); ?></div>
+			<div id="<?php echo $id; ?>" class="filtro col-sm-6"><?php filtro($id, $filtro['valores'], $filtro['titulo']); ?></div>
 
 			<?php if( $contador == 2 ): ?>
 
@@ -488,6 +561,13 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
 	global $imagenes_prueba;
 
 	$resultado = array();
+
+	if( $offset > 0 ) {
+		$offset *= $numero;
+		$numero += $offset;
+	} else if( $offset < 0 ) {
+		$offset = 0;
+	}
 
 	for ($i=$offset; $i < $numero; $i++) { 
 		$resultado[] = $imagenes_prueba[$i];
