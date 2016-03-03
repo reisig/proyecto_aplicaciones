@@ -38,6 +38,7 @@ create table usuario_asignatura(
 );
 			
 create table repositorio(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
 	ruta varchar(50) not null,
 	rut_alumno varchar(12),
 	descripcion text,
@@ -46,7 +47,7 @@ create table repositorio(
 	aumento int,
 	ruta_dibujo varchar(50),
 	fecha date,
-	primary key(ruta),
+	primary key(id),
 	foreign key(rut_alumno) references usuarios(rut)
 );
 
