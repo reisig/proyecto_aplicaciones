@@ -1,0 +1,3 @@
+Listado_guias: Archivo principal listadoGuias y guias_resueltas
+Dependencias: Base datos biologia v6
+Descripcion: Archivo listado guias, solo para ver la estructura, al final de la rama se uniran correctamente los archivos, para probar la pagina puede descargarla de aqui: http://www.mediafire.com/download/qvcmwmgncmg1be9/listado_guias.rar

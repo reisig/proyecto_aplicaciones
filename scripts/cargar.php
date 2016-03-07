@@ -1,39 +1,39 @@
 <?php 
-/**
- * Archivo encargado de cargar todas las dependencias 
- * de la pagina.
- *
- * @package RepBiologia
- * @subpackage Scripts
- * @since RepBiologia 1.0
- */
+    /**
+     * Archivo encargado de cargar todas las dependencias 
+     * de la pagina.
+     *
+     * @package RepBiologia
+     * @subpackage Scripts
+     * @since RepBiologia 1.0
+     */
 
-//definicion de constantes.
-define('DIR', explode('/scripts', __DIR__)[0] );
-define('DIR_SCRIPTS', __DIR__);
-define('URI', 'http://192.168.56.101/proyecto_aplicaciones'/*$_SERVER['SERVER_NAME']*/); //esto hay que arreglarlo.
-define('URI_JS', URI. '/js');
-define('URI_CSS', URI. '/css');
+    //carga dependencias carpeta IMAGEN.
+    require_once(__DIR__. 'imagen/imagen.php');
+    require_once(__DIR__. 'imagen/funciones-galeria.php');
+    
+    //carga dependencias carpeta BD
 
-/**
- * Agrega un archivo css.
- *
- * @param $dir_archivo El nombre del archivo ubicado en la carpeta css.
- */
-function agregar_css( $dir_archivo ) {
-	echo '<link rel="stylesheet" type="text/css" href="'. URI_CSS. '/'. $dir_archivo. '">';
-}
+    /*require_once(__DIR__. 'conexion.php');
+    require_once(__DIR__. 'config.php');
+    require_once(__DIR__. 'consultas.php');
+    require_once(__DIR__. 'dbc.php');
+    require_once(__DIR__. 'mysql_connection.php');*/
 
-/**
- * Agrega un archivo js.
- *
- * @param $dir_archivo El nombre del archivo ubicado en la carpeta js.
- */
-function agregar_js( $dir_archivo ) {
-	echo '<script type="text/javascript" src="js/'. $dir_archivo. '"></script>';
-}
+    //carga dependencias carpeta INSTALACION
 
-//carga de scripts PHP.
+    //require_once(__DIR__. 'insert.php');
 
+
+    //carga dependencias carpeta LISTADO_GUIAS
+    //require_once(__DIR__. 'cargarGuias.php');
+    //require_once(__DIR__. 'clase_guia.php');
+    //require_once(__DIR__. 'listadoGuias.php');
+
+    //carga dependencias carpeta USUARIO
+
+    //require_once(__DIR__. 'administrador.php');
+    //require_once(__DIR__. 'alumno.php');
+    //require_once(__DIR__. 'profesor.php');
  ?>
 
