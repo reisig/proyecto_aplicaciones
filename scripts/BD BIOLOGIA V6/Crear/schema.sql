@@ -40,8 +40,8 @@ DROP TABLE IF EXISTS `Contenido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Contenido` (
-  `IdPregunta` int(11) DEFAULT NULL,
   `IdGuia` int(11) DEFAULT NULL,
+  `IdPregunta` int(11) DEFAULT NULL,
   `Respuesta` varchar(500) DEFAULT NULL,
   KEY `fk_Contenido_1_idx` (`IdGuia`),
   KEY `fk_Contenido_2_idx` (`IdPregunta`),
