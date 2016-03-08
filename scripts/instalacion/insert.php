@@ -93,7 +93,11 @@
 
           $creaContenido = "CREATE TABLE ".$TablaContenido.
                             "(
+<<<<<<< HEAD
                                 IdGuia int(11),
+=======
+                            	IdGuia int(11),
+>>>>>>> 8896ba09baa4db9fe67d40f46cc22f3f5f224bd8
                                 IdPregunta int(11),
                                 Respuesta varchar(500),
                                 PRIMARY KEY (IdGuia, IdPregunta)
@@ -106,14 +110,13 @@
                           Descripcion varchar(500),
                           Fecha date,
                           IdAsignatura int(11),
-                          Estado int(11),
+                          Estado varchar(11),
                           PRIMARY KEY (Id)
                       )";
 
           $creaPregunta = "CREATE TABLE ".$TablaPregunta.
                           "(
                               Id int(11),
-                              IdGuia int (11),
                               Enunciado varchar(100),
                               TipoRespuesta varchar(50),
                               PRIMARY KEY (Id)
@@ -122,8 +125,8 @@
           $creaRepositorio = "CREATE TABLE ".$TablaRepositorio.
                               "(
                                   Id MEDIUMINT NOT NULL AUTO_INCREMENT,
-                                  Ruta varchar(200),
                                   RutAlumno varchar(20),
+                                  Ruta varchar(200),
                                   DescripcionBreve varchar(600),
                                   TipoTenido varchar(20),
                                   Preparacion varchar(20),
@@ -156,7 +159,6 @@
                               ApellidoP varchar(50),
                               ApellidoM varchar(50),
                               Rut varchar(20),
-                              IdAsignatura int(11),
                               Correo varchar(50),
                               Password varchar(100),
                               TipoUsuario varchar(20),
@@ -217,13 +219,14 @@
           //echo "alter guia\n";
           echo "0";
         }
-
+          
+        /*
         if(!$con->query($alterTable.$TablaPregunta." ADD CONSTRAINT fk_".$TablaPregunta."_1 FOREIGN KEY 
                                                 (IdGuia) REFERENCES ".$TablaGuia."(Id)")){
 
           //echo "alter guia\n";
           echo "0";
-        }
+        }*/
         
         if(!$con->query($alterTable.$TablaRepositorio. " ADD CONSTRAINT fk_".$TablaRepositorio."_1 FOREIGN KEY
                                                         (RutAlumno) REFERENCES ".$TablaUsuario."(Rut)")){
