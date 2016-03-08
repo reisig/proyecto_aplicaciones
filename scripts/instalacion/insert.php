@@ -93,8 +93,8 @@
 
           $creaContenido = "CREATE TABLE ".$TablaContenido.
                             "(
-                                IdPregunta int(11),
                                 IdGuia int(11),
+                                IdPregunta int(11),
                                 Respuesta varchar(500),
                                 PRIMARY KEY (IdGuia, IdPregunta)
                             )";
