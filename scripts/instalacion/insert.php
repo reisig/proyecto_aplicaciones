@@ -80,7 +80,7 @@
           *
           */
           
-          /*
+          
           $creaAsignatura = "CREATE TABLE ".$TablaAsignatura.
                             "(
                                   Id int(11),
@@ -88,7 +88,7 @@
                                   RutProfesorACargo varchar(20),
                                   PRIMARY KEY (Id)
                             )";
-          */
+          
 
 
           $creaContenido = "CREATE TABLE ".$TablaContenido.
@@ -105,6 +105,7 @@
                           Titulo varchar(50),
                           Descripcion varchar(500),
                           Fecha date,
+                          IdAsignatura int(11),
                           Estado int(11),
                           PRIMARY KEY (Id)
                       )";
@@ -155,21 +156,22 @@
                               ApellidoP varchar(50),
                               ApellidoM varchar(50),
                               Rut varchar(20),
+                              IdAsignatura int(11),
                               Correo varchar(50),
                               Password varchar(100),
                               TipoUsuario varchar(20),
                               PRIMARY KEY (Rut)
                             )";
-          /*
+          
           $creaUsuarioAsignatura = "CREATE TABLE ".$TablaUsuarioAsignatura.
                           "(
                               RutUsuario varchar(20) not null,
 	                          IdAsignatura int(11),
                             )";
-                            */
+                            
           
           //crear tablas
-         //if( !$con->query($creaAsignatura) ) { /*echo "Tabla ".$TablaAsignatura." creada.\n";*/ echo "0";}    
+         if( !$con->query($creaAsignatura) ) { /*echo "Tabla ".$TablaAsignatura." creada.\n";*/ echo "0";}    
          if( !$con->query($creaContenido) ) { /*echo "Tabla ".$TablaContenido. " creada.\n";*/ echo "0";}
          if( !$con->query($creaGuia) ){ /*echo "Tabla ".$TablaGuia." creada.\n";*/ echo "0";}
          if( !$con->query($creaUsuario)){ /*echo "Tabla ".$TablaUsuario." creada.\n";*/ echo "0";}
@@ -177,7 +179,7 @@
          if( !$con->query($creaRespuesta)){ /*echo "Tabla ".$TablaRespuesta." creada.\n";*/ echo "0";}
          if( !$con->query($creaRepositorio)){ /*echo "Tabla ".$TablaRepositorio." creada.\n";*/ echo "0";}
          if( !$con->query($creaPregunta)){ /*echo "Tabla ".$TablaPregunta." creada.\n";*/ echo "0";}
-         //if( !$con->query($creaUsuarioAsignatura)){ /*echo "Tabla ".$TablaUsuarioAsignatura." creada.\n";*/ echo "0";}
+         if( !$con->query($creaUsuarioAsignatura)){ /*echo "Tabla ".$TablaUsuarioAsignatura." creada.\n";*/ echo "0";}
 
         $alterTable = "ALTER TABLE ";
 
@@ -187,14 +189,14 @@
           Creacion de claves foraneas 
 
         */
-        /*
+        
         if(!$con->query($alterTable.$TablaAsignatura." ADD CONSTRAINT fk_".$TablaAsignatura."_1 FOREIGN KEY 
                                                     (RutProfesorACargo) REFERENCES ".$TablaUsuario. "(Rut) 
                                                     ON DELETE NO ACTION ON UPDATE NO ACTION")){
           //echo "alter asignatura\n";
           echo "0";
         }
-        */
+        
           
         if(!$con->query($alterTable.$TablaContenido." ADD CONSTRAINT fk_".$TablaContenido."_1 FOREIGN KEY 
                                                     (IdGuia) REFERENCES ".$TablaGuia."(Id)
@@ -208,13 +210,13 @@
           //echo "alter contenido 2\n";
           echo "0";
         }
-          /*
+          
         if(!$con->query($alterTable.$TablaGuia." ADD CONSTRAINT fk_".$TablaGuia."_1 FOREIGN KEY 
                                                 (IdAsignatura) REFERENCES ".$TablaAsignatura."(Id)")){
 
           //echo "alter guia\n";
           echo "0";
-        }*/
+        }
 
         if(!$con->query($alterTable.$TablaPregunta." ADD CONSTRAINT fk_".$TablaPregunta."_1 FOREIGN KEY 
                                                 (IdGuia) REFERENCES ".$TablaGuia."(Id)")){
@@ -254,14 +256,24 @@
           echo "0";
         }
 
-          /*
+          
         if(!$con->query($alterTable.$TablaUsuario. " ADD CONSTRAINT fk_".$TablaUsuario."_1 FOREIGN KEY
                                                     (IdAsignatura) REFERENCES ".$TablaAsignatura."(Id)")){
           //echo "alter usuario\n";
           echo "0";
-        }*/
+        }
 
-
+        if(!$con->query($alterTable.$TablaUsuarioAsignatura. " ADD CONSTRAINT fk_".$TablaUsuarioAsignatura."_1 FOREIGN KEY
+                                                    (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)")){
+          //echo "alter usuario\n";
+          echo "0";
+        }
+        
+        if(!$con->query($alterTable.$TablaUsuarioAsignatura. " ADD CONSTRAINT fk_".$TablaUsuarioAsignatura."_2 FOREIGN KEY
+                                                    (IdAsignatura) REFERENCES ".$TablaAsignatura."(Id)")){
+          //echo "alter usuario\n";
+          echo "0";
+        }
         /*
 
           Creacion e insercion en la base de datos de la cuenta de administrador

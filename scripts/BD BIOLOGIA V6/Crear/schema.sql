@@ -19,17 +19,17 @@
 -- Table structure for table `Asignatura`
 --
 
-/*DROP TABLE IF EXISTS `Asignatura`;*/
+DROP TABLE IF EXISTS `Asignatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-/*CREATE TABLE `Asignatura` (
+CREATE TABLE `Asignatura` (
   `Id` int(11) NOT NULL,
   `NombreAsignatura` varchar(50) DEFAULT NULL,
   `RutProfesorACargo` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `fk_Asignatura_1_idx` (`RutProfesorACargo`),
   CONSTRAINT `fk_Asignatura_1` FOREIGN KEY (`RutProfesorACargo`) REFERENCES `Usuario` (`Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;*/
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,11 +62,11 @@ CREATE TABLE `Guia` (
   `Titulo` varchar(50) DEFAULT NULL,
   `Descripcion` varchar(500) DEFAULT NULL,
   `Fecha` date DEFAULT NULL,
-  /*`IdAsignatura` int(11) DEFAULT NULL,*/
+  `IdAsignatura` int(11) DEFAULT NULL,
   `Estado` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  /*KEY `fk_Guia_1_idx` (`IdAsignatura`),
-  CONSTRAINT `fk_Guia_1` FOREIGN KEY (`IdAsignatura`) REFERENCES `Asignatura` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION*/
+  KEY `fk_Guia_1_idx` (`IdAsignatura`),
+  CONSTRAINT `fk_Guia_1` FOREIGN KEY (`IdAsignatura`) REFERENCES `Asignatura` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -162,28 +162,28 @@ CREATE TABLE `Usuario` (
   `ApellidoP` varchar(50) DEFAULT NULL,
   `ApellidoM` varchar(50) DEFAULT NULL,
   `Rut` varchar(20) NOT NULL,
-  /*`IdAsignatura` int(11) DEFAULT NULL,*/
+  `IdAsignatura` int(11) DEFAULT NULL,
   `Correo` varchar(50) DEFAULT NULL,
   `Password` varchar(50) DEFAULT NULL,
   `TipoUsuario` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Rut`),
-  /*KEY `fk_Usuario_1_idx` (`IdAsignatura`),
-  CONSTRAINT `fk_Usuario_1` FOREIGN KEY (`IdAsignatura`) REFERENCES `Asignatura` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION*/
+  KEY `fk_Usuario_1_idx` (`IdAsignatura`),
+  CONSTRAINT `fk_Usuario_1` FOREIGN KEY (`IdAsignatura`) REFERENCES `Asignatura` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-/*
+
 DROP TABLE IF EXISTS `UsuarioAsignatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 ;*/
-/*CREATE TABLE `UsuarioAsignatura` (
+/*!40101 SET character_set_client = utf8*/;
+CREATE TABLE `UsuarioAsignatura` (
   `RutUsuario` varchar(20) NOT NULL,
   `IdAsignatura` int(11) NOT NULL,
   KEY `fk_UsuarioAsignatura_1_idx` (`RutUsuario`),
   KEY `fk_UsuarioAsignatura_2_idx` (`IdAsignatura`),
   CONSTRAINT `fk_UsuarioAsignatura_1` FOREIGN KEY (`RutUsuario`) REFERENCES `Usuario` (`Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_UsuarioAsignatura_2` FOREIGN KEY (`IdAsignatura`) REFERENCES `Asignatura` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;*/
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
