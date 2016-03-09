@@ -13,9 +13,9 @@ create table Usuario(
 create table Asignatura(
 	Id int(11) not null,
 	NombreAsignatura varchar(50) default null,
-	RutProfersorACargo varchar(20) default null,
+	RutProfesorACargo varchar(20) default null,
 	primary key(Id),
-	foreign key(RutProfersorACargo) references Usuario(Rut) 
+	foreign key(RutProfesorACargo) references Usuario(Rut) 
 	on delete no action on update no action
 );
 	
