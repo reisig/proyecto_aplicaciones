@@ -3,8 +3,10 @@ Insetar en el siguiente orden:
 /*Importar tablas*/
 mysql -u root -p biologia < /ruta/archivo.sql  //ruta = importar el archivo al servidor 
 
-1.- Usuarios
-2.- Asignaturas
-3.- Usuario_asignatura
-4.- Guias
-5.- Guia
+1.- Usuario
+2.- Alumno
+3.- Asignatura
+4.- UsuarioAsignatura
+5.- Guias
+6.- Guia
+7.- Contenido

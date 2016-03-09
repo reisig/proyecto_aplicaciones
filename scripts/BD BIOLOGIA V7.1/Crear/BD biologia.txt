@@ -7,7 +7,7 @@ show databases;
 quit
 
 /*Importar tablas*/
-mysql -u root -p biologia < /ruta/biologiav3.sql //ruta = importar el archivo al servidor 
+mysql -u root -p biologia < /ruta/biologiav7.1.sql //ruta = importar el archivo al servidor 
 
 
 /*Verificar tablas*/
@@ -18,5 +18,7 @@ quit
 
 /*Crear usuario BD : en caso de no existir*/
 
-mysql -u root -p biologiav3 < /ruta/usuarioBD.sql //ruta = importar el archivo al servidor 
+mysql -u root -p biologia < /ruta/usuarioBD.sql //ruta = importar el archivo al servidor 
 
+/*comprobar usuario*/
+select host, user, password from mysql.user;
