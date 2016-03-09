@@ -13,6 +13,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Repositorio - Departamento de Biologia</title>
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
@@ -28,10 +30,17 @@
         <script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
         <script type="text/javascript" src="js/photoswipe.min.js"></script>
         <script type="text/javascript" src="js/photoswipe-ui-default.min.js"></script>
+        <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
         <script type="text/javascript" src="js/init.js"></script>
         <script type="text/javascript" src="js/main.js"></script>  
     </head>
-    
-    <body></body>   
-</html>
 
+    <body>
+
+        <div class="envoltura">
+    
+            <header>
+            
+                <!-- aqui va el menu -->
+
+            </header>
