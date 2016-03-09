@@ -195,6 +195,38 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         // Pass data to PhotoSwipe and initialize it
         gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
         gallery.init();
+
+        // mostramos el boton para mostrar la comparacion.
+        gallery.listen('imageLoadComplete', function(index, item) { 
+            var galeriaImagenes = document.getElementById('galeria');
+            var btnMostrar = document.getElementById('botonComparacion');
+
+            // definimos las imagenes de comparacion solo la primera vez que se muestra el visor.
+            if( galeriaImagenes.dataset.estado === '0' ) {
+                var fotografia = document.getElementById('fotografia');
+                var dibujo = document.getElementById('dibujo');
+
+                fotografia.src = gallery.currItem.src;
+                dibujo.src = gallery.currItem.el.dataset.dibujo;
+                galeriaImagenes.dataset.estado = '1';
+            }
+
+            btnMostrar.style.display = 'block';
+        });
+
+        gallery.listen('afterChange', function() {
+            var fotografia = document.getElementById('fotografia');
+            var dibujo = document.getElementById('dibujo');
+
+            fotografia.src = gallery.currItem.src;
+            dibujo.src = gallery.currItem.el.dataset.dibujo;
+        });
+
+        gallery.listen('close', function() {
+            var btnMostrar = document.getElementById('botonComparacion');
+
+            btnMostrar.style.display = 'none';
+        });
     };
 
     // loop through all gallery elements and bind events

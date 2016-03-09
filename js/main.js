@@ -41,13 +41,38 @@ $( document ).ready(function() {
 	$('.paginacion .pagina').on('click', function( event ){
 		event.preventDefault();
 
-		console.log('message');
-
 		var $offset = $('#offset');
 
 		$offset.val($(this).data('numero'));
 
 		$("#busqueda .realizar-busqueda").click();
+	});
+
+	/*------------------------------------
+			Comparacion dibujo.
+	  ------------------------------------*/
+
+	$('#botonComparacion').on('click', function( event ){
+		event.preventDefault();
+
+		$('#visorComparacion').css('display', 'block');
+	});
+
+	$('#cerrarComparacion').on('click', function( event ){
+		event.preventDefault();
+
+		$('#visorComparacion').css('display', 'none');
+	});
+
+	$('#galeria .imagenes > figure').on('click', function( event ){
+		event.preventDefault();
+		console.log('message');
+
+		var fotografia = $(this).find('img').attr('src');
+		var dibujo = $(this).data('dibujo');
+
+		$('#fotografia').attr('src', fotografia);
+		$('#dibujo').attr('src', dibujo);
 	});
 
 });
