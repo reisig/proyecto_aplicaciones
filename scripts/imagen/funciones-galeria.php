@@ -13,12 +13,14 @@
  * @return int
  */
 function obtener_offset() {
-	$offset = 0;
+	$offset = 1;
 
 	//comrpobamos si existe la variable offset.
 	if( isset($_GET['offset']) ) {
 		return $_GET['offset'];
 	}
+
+	return $offset;
 }
 
 /**
@@ -174,7 +176,7 @@ function obtener_imagenes_galeria( $imagenes ) {
 		foreach ($imagenes as $imagen) {
 			$info_imagen = getimagesize('repositorio/'. $imagen);
 
-			$html .= '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-sm-3">';
+			$html .= '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-md-3" data-dibujo="repositorio/'. $imagen. '">';
 
 				$html .= '<a href="repositorio/'. $imagen. '" itemprop="contentUrl" data-size="'. $info_imagen[0]. 'x'. $info_imagen[1]. '">';
 

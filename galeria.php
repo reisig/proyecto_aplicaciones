@@ -36,11 +36,34 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 </head>
 <body>
 
-	<?php $offset = obtener_offset(); ?>
 
 	<div class="envoltura">
 
-		<main id="galeria">
+		<?php $offset = obtener_offset(); ?>
+		
+		<?php $imagenes = obtener_imagenes($_GET, 14, $offset-1); ?>
+
+		<?php 
+		//global $usuario;
+
+		//if( $usuario->tipo == 'administrador' ): ?>
+
+			<div id="visorComparacion" class="visor-comparacion" style="display: none;">
+
+				<div class="pswp__top-bar"><button id="cerrarComparacion" class="pswp__button cerrar-comparacion" title="Cerrar Dibujo"></button></div>
+
+				<div class="contenedor-imagenes">
+
+					<div class="cr-fotografia col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Fotografia" id="fotografia" class="img-responsive" /></div>
+					<div class="cr-dibujo col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Dibujo fotografia" id="dibujo" class="img-responsive" /></div>
+
+				</div>
+
+			</div>
+
+		<?php //endif; ?>
+
+		<main id="galeria" data-estado="0">
 
 			<div class="contenedor-filtros">
 
@@ -98,7 +121,7 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 
 			<div class="contenedor-imagenes">
 
-				<?php echo obtener_imagenes_galeria(obtener_imagenes($_GET, 14, $offset-1)); ?>
+				<?php echo obtener_imagenes_galeria($imagenes); ?>
 
 				<!-- Visor de imagenes. -->
 				<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -131,6 +154,12 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 				                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 
 				                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+				                <?php //if( $usuario->tipo == 'administrador' ): ?>
+
+				                	<button id="botonComparacion" class="pswp__button" title="Dibujo"><i class="fa fa-files-o"></i></button>
+
+				                <?php //endif; ?>
 
 				                <!-- Preloader -->
 				                <div class="pswp__preloader">
