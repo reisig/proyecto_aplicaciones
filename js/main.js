@@ -58,7 +58,7 @@ $( document ).ready(function() {
 		$('#visorComparacion').css('display', 'block');
 	});
 
-	$('#cerrarComparacion').on('click', function( event ){
+	$('#visorComparacion .pswp__top-bar').on('click', function( event ){
 		event.preventDefault();
 
 		$('#visorComparacion').css('display', 'none');
@@ -66,7 +66,6 @@ $( document ).ready(function() {
 
 	$('#galeria .imagenes > figure').on('click', function( event ){
 		event.preventDefault();
-		console.log('message');
 
 		var fotografia = $(this).find('img').attr('src');
 		var dibujo = $(this).data('dibujo');

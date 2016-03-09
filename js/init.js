@@ -259,4 +259,12 @@ jQuery(window).load(function(  ){
 	// iniciamos el visor.
 	initPhotoSwipeFromDOM('#galeria .imagenes');
 
+    // modifica el scroll para la comparacion de imagenes.
+    var nice = jQuery("#contenedorComparacion").niceScroll({
+        cursorcolor:"#e3e3e3",
+        cursoropacitymax:0.7,
+        //boxzoom:true,
+        touchbehavior:true
+    });
+
 });
