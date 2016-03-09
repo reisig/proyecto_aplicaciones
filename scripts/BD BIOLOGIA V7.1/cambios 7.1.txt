@@ -1,0 +1,9 @@
+tabla guia: cambio variable estado de int a varchar, para usar ACTIVA o INACTIVA
+
+tabla pregunta: borrado idAsignatura
+
+Repositorio: cambio de orden columna RutAlumno
+
+Tabla usuario: Borrado idAsignatura
+
+Contenido: cambiado el orden de las columnas idPregunta, IdGuia, Respuesta -> IdGuia, IdPregunta Respuesta
