@@ -1,0 +1,30 @@
+/*Contenido*/
+
+insert into Contenido values (0,1,'FOTO');
+insert into Contenido values (0,2,'FOTO');
+insert into Contenido values (0,3,'DIBUJO');
+insert into Contenido values (0,4,'DIBUJO');
+insert into Contenido values (0,5,'MULTIPLE');
+insert into Contenido values (0,6,'MULTIPLE');
+insert into Contenido values (0,7,'MULTIPLE');
+insert into Contenido values (0,8,'MULTIPLE');
+insert into Contenido values (0,9,'TITULO');
+insert into Contenido values (0,10,'TEXTO');
+insert into Contenido values (0,11,'TEXTO');
+insert into Contenido values (0,12,'MULTIPLE');
+insert into Contenido values (0,13,'TITULO');
+insert into Contenido values (0,14,'MULTIPLE');
+insert into Contenido values (0,15,'MULTIPLE');
+insert into Contenido values (0,16,'MULTIPLE');
+insert into Contenido values (0,17,'MULTIPLE');
+insert into Contenido values (0,18,'MULTIPLE');
+insert into Contenido values (0,19,'MULTIPLE');
+insert into Contenido values (0,20,'TITULO');
+insert into Contenido values (0,21,'MULTIPLE');
+insert into Contenido values (0,22,'MULTIPLE');
+insert into Contenido values (0,23,'TEXTO');
+insert into Contenido values (0,24,'MULTIPLE');
+insert into Contenido values (0,25,'MULTIPLE');
+insert into Contenido values (0,26,'AREA');
+insert into Contenido values (0,27,'MULTIPLE');
+insert into Contenido values (0,28,'AREA');
