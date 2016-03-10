@@ -14,9 +14,15 @@
 		<?php
 			require('scripts/conexion.php');
 			
-			//$id_asignaruta = $_GET['id'];
-			$id_asignatura = 1;
+            $rutProfesor = $_GET['rut'];
+			$idAsignatura = $_GET['id'];
 			
+            //$rutProfesor = '15302958-k';
+			//$idAsignatura = 1;
+        
+            //print "<h3>Rut_Profesor: ".$rutProfesor."</h3>";
+            //print "<h3>ID_Asignatura: ".$idAsignatura."</h3>";
+        
 			function cargar_alumno($rut,$nombre){
 	
 				print "<div class=\"row\" id = \"".$rut."\">";
@@ -31,12 +37,40 @@
 				print  "</div>";
 				print  "<hr>";
 			}
+        
+            function menuAsignatura($idAsignatura, $asignatura){
+                print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
+
+            }
 		?>
 		
     </head>
 
     <body>
 
+        <?php
+            
+            /*Recuperar listado de asignaturas*/
+            $stmt = $conn->prepare("SELECT Id, NombreAsignatura FROM Asignatura WHERE RutProfesorACargo=:rut");
+            $stmt->bindParam(':rut', $rutProfesor);
+            $stmt->execute();
+            
+            $idAsignatura = array();
+            $asignaturas = array();
+
+            while($row = $stmt->fetch()){
+                array_push($idAsignatura, $row['Id']);
+                array_push($asignaturas, $row['NombreAsignatura']);
+            } 
+
+            /*Recuperar datos del profesor*/
+            $stmt = $conn->prepare ("SELECT Nombre, ApellidoP FROM Usuario WHERE Rut=:rut");
+            $stmt->bindParam(':rut',$rutProfesor);
+            $stmt->execute();
+            $row = $stmt->fetch();
+
+            $profesor = $row['Nombre']." ".$row['ApellidoP'];
+        ?>
        <!-- nav -->
         <nav class="navbar navbar-default">
             <div class="container">
@@ -53,11 +87,32 @@
                 <!-- RIGHT SECTION -->
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                        <li><a href="listadoGuias.html">Guías Laboratorio</a></li>
-                        <li><a href="#">Galería</a></li>
-                        <li class="active"><a href="#">Guías Resueltas</a></li>
-                        <li class="sign-out">
-                            <a href="#">Cerrar Sesión <span class="sr-only">(current)</span></a>
+                        <li>
+                            <a href="asignaturas.php">Asignaturas</a>
+                        </li>
+                        <li class="active dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Guías Resueltas<span class="caret"></span></a>
+                            <ul class="dropdown-menu" id = "listado-secundario">
+
+                                <!-- Listar asignaturas -->
+                                <?php 
+                                for($i=0; $i<count($asignaturas);$i++){
+                                    menuAsignatura($idAsignatura[$i], $asignaturas[$i]);
+                                }
+                                ?>
+
+                            </ul>     
+                        </li>
+                        <li>
+                            <a href="#">Galería</a>
+                        </li>
+                        <li class="dropdown sign-out">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><?php print $profesor;?><span class=" caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <!-- Listar asignaturas -->
+                                <!--<li class="divider"></li>-->
+                                <li><a href="#">Cerrar Sesión</a></li>
+                            </ul>     
                         </li>
                     </ul>
                  </div>
@@ -78,7 +133,7 @@
 				/*Seleccionar personas que pertenezcan a la asignatura*/
 				
 				$stmt = $conn->prepare ("SELECT RutUsuario FROM UsuarioAsignatura WHERE IdAsignatura = :id");
-				$stmt->bindParam(':id',$id_asignatura);
+				$stmt->bindParam(':id',$idAsignatura);
 				$stmt->execute();
 				
 				while ($row = $stmt->fetch()){
