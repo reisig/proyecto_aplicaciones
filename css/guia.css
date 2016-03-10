@@ -1,0 +1,40 @@
+#logo-uls {
+    padding: 10px;
+    width: 100px;
+    height: 10opx;
+}
+        
+.navbar-nav > li > a {
+    padding: 26px;
+    margin-right: 14px;
+}
+
+.sign-out {
+    border-left: 1px solid #e7e7e7;
+}
+
+.logo-uls {
+    border-right: 1px solid #e7e7e7;
+}
+
+/*#contenedor-guia,#subir-dibujo, #subir-imagen , #listado, #area-texto, #texto, #seleccion-inclusiva, #seleccion-exclusiva{
+	
+	border-style: dotted;
+	border-color: blue;
+	border-width: 0.5px;
+	padding: 10px;
+	margin: 3px;
+}*/
+
+#descripcion_fotografia {
+  resize: none;
+}
+
+#activar{
+	text-align: top;
+}
+
+.col-center {
+  margin:0 auto;
+}
+

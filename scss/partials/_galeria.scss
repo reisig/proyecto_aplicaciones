@@ -110,6 +110,9 @@
 			}
 			
 		}
+		.pswp__top-bar, .pswp__caption {
+			background-color: rgba(0,0,0,0.8);
+		}
 	}
 	.contenedor-paginacion {
 		position: relative;
@@ -165,7 +168,7 @@
 		background-color: #000;
 		z-index: 1601;	
 	}
-	.contenedor-imagenes {
+	.contenedor-comparacion {
 		position: fixed;
 		top: 0;
 		width: 100%;

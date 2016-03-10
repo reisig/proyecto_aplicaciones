@@ -9,35 +9,9 @@
 /*Gran parte del codigo de este archivo no es el codigo final, solo se hizo para
   probar la pagina. */
 
-require_once( 'scripts/imagen/funciones-galeria.php' );
+require_once( __DIR__. '/cabecera.php' );
 
  ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>Repositorio Biologia</title>
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/photoswipe.css">
-	<link rel="stylesheet" type="text/css" href="css/default-skin/default-skin.css">
-	<link rel="stylesheet" type="text/css" href="css/estilo.css">
-	<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
-	<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>
-	<script type="text/javascript" src="js/photoswipe.min.js"></script>
-	<script type="text/javascript" src="js/photoswipe-ui-default.min.js"></script>
-	<script type="text/javascript" src="js/init.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-</head>
-<body>
-
-
-	<div class="envoltura">
 
 		<?php $offset = obtener_offset(); ?>
 		
@@ -52,7 +26,7 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 
 				<div class="pswp__top-bar"><button id="cerrarComparacion" class="pswp__button cerrar-comparacion" title="Cerrar Dibujo"></button></div>
 
-				<div class="contenedor-imagenes">
+				<div id="contenedorComparacion" class="contenedor-comparacion">
 
 					<div class="cr-fotografia col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Fotografia" id="fotografia" class="img-responsive" /></div>
 					<div class="cr-dibujo col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Dibujo fotografia" id="dibujo" class="img-responsive" /></div>
@@ -201,7 +175,4 @@ require_once( 'scripts/imagen/funciones-galeria.php' );
 
 		</main>
 
-	</div> <!-- fin envoltura -->
-
-</body>
-</html>
+<?php require_once( __DIR__. '/pie-pagina.php' ); ?>
