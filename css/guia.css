@@ -17,16 +17,7 @@
     border-right: 1px solid #e7e7e7;
 }
 
-/*#contenedor-guia,#subir-dibujo, #subir-imagen , #listado, #area-texto, #texto, #seleccion-inclusiva, #seleccion-exclusiva{
-	
-	border-style: dotted;
-	border-color: blue;
-	border-width: 0.5px;
-	padding: 10px;
-	margin: 3px;
-}*/
-
-#descripcion_fotografia {
+#descripcion_fotografia{
   resize: none;
 }
 
@@ -34,7 +25,6 @@
 	text-align: top;
 }
 
-.col-center {
+.col-center{
   margin:0 auto;
 }
-

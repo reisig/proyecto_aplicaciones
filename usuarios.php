@@ -9,10 +9,10 @@
 
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/mis_css/guia.css" rel="stylesheet">
+        <link href="css/guia.css" rel="stylesheet">
 
 		<?php
-			require('conexion.php');
+			require('scripts/conexion.php');
 			
 			//$id_asignaruta = $_GET['id'];
 			$id_asignatura = 1;

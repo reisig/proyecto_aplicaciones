@@ -9,7 +9,7 @@
         <title>Asignaturas</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/mis_css/guia.css" rel="stylesheet">
+        <link href="css/guia.css" rel="stylesheet">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -45,7 +45,7 @@
 		<?php
 		
 			/*Datos de conexion*/
-			require('conexion.php');
+			require('scripts/conexion.php');
         
             //$rutProfesor = $_GET['rut'];
             $rutProfesor = '15302958-k';
@@ -98,9 +98,9 @@
                                    
                                     <!-- Listar asignaturas -->
                                     <?php 
-                                    for($i=0; $i<count($asignaturas);$i++){
-                                        menuAsignatura($asignaturas[$i]);
-                                    }
+										for($i=0; $i<count($asignaturas);$i++){
+											menuAsignatura($asignaturas[$i]);
+										}
                                     ?>
                                     
                                 </ul>     
