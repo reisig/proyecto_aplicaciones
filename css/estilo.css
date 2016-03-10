@@ -13,6 +13,13 @@ a:hover {
   text-decoration: none;
 }
 
+#cabecera > nav {
+  margin: 0;
+  border-radius: 0 !important;
+  border: none;
+  border-bottom: 1px solid #c9c9c9;
+}
+
 #galeria {
   position: relative;
   width: 100%;
