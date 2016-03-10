@@ -122,23 +122,64 @@
 	  
 		<?php
 		
-		   /*$stmt = $conn->prepare ("SELECT count(*) as total FROM preguntas");
-			$stmt->execute();
-			$row = $stmt->fetch();
-			print "<h3>Cantidad de preguntas: ".$row['total']."</h3>";*/
+			/*Arreglos para guardar las variables*/
+			
+			$ids = array();
+			$enunciados = array();
+			$tipos = array();
+		
+			if ($modo == 'CREAR' || $modo == 'EDITAR'){
+				
+				/*Seleccionar todas las preguntas de Pregunta*/
 
-			/*Seleccionar todas las preguntas de Preguntas (guia maestra)*/
+				$stmt = $conn->prepare ("SELECT * FROM Pregunta");
+				$stmt->execute();
+				
+				while($row = $stmt->fetch()){
+					
+					$id_pregunta = $row['Id'];
+					$enunciado =  $row['Enunciado'];
+					$tipo_respuesta = $row['TipoRespuesta'];
+					
+					array_push($ids,$id_pregunta);
+					array_push($enunciados,$enunciado);
+					array_push($tipos,$tipo_respuesta);
+				}
+				
+			}else{ /*modo VER o RESOLVER*/
+				
+				/*Seleccionar las preguntas seleccionadas desde Contenido*/
 
-			$stmt = $conn->prepare ("SELECT * FROM Pregunta");
-			$stmt->execute();
-
+				$stmt = $conn->prepare ("SELECT IdPregunta FROM Contenido WHERE IdGuia = :id");
+				$stmt->bindParam(':id',$id);
+				$stmt->execute();
+				
+				while($row = $stmt->fetch()){
+					
+					$id_pregunta = $row['IdPregunta'];
+					
+					$stmt2 = $conn->prepare ("SELECT Enunciado, TipoRespuesta FROM Pregunta WHERE Id = :id");
+					$stmt2->bindParam(':id',$id_pregunta);
+					$stmt2->execute();
+					
+					$row = $stmt2->fetch();
+						
+					$enunciado =  $row['Enunciado'];
+					$tipo_respuesta = $row['TipoRespuesta'];
+				
+					array_push($ids,$id_pregunta);
+					array_push($enunciados,$enunciado);
+					array_push($tipos,$tipo_respuesta);
+				}
+			}
+		
 			/*Obtener y cargar preguntas*/
 					
-			while($row = $stmt->fetch()){
+			for ($i = 0; $i < count ($ids); $i++){
 				
-				$id_pregunta = $row['Id'];
-				$enunciado =  $row['Enunciado'];
-				$tipo_respuesta = $row['TipoRespuesta'];
+				$id_pregunta = $ids[$i];
+				$enunciado =  $enunciados[$i];
+				$tipo_respuesta = $tipos[$i];
 				
 				/*print "<br><br><br>";  
 				print "PREGUNTA  INICIO<br><br>";
