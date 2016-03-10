@@ -10,3 +10,5 @@ mysql -u root -p biologia < /ruta/archivo.sql  //ruta = importar el archivo al s
 5.- Guias
 6.- Guia
 7.- Contenido
+8.- ContenidoGuia1
+9.- alumnosAsignatura
