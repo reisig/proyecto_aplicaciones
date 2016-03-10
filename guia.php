@@ -33,53 +33,62 @@
             print "<h3>ID_Asignatura: ".$idAsignatura."</h3>";
             print "<h3>ID_Guia: ".$idGuia."</h3>";
             print "<h3>MODO: ".$modo."</h3>";*/
+			
+			function menuAsignatura($idAsignatura, $asignatura){
+				print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
+			}
         ?>
 
         <script>
 
-                function subir_preguntas(){
-                    
-                    var cantidad_preguntas = 28;
-                    var preguntas = [];
+			function subir_preguntas(modo){
+				
+				//console.log("Modo: "+modo);
+				
+				var cantidad_preguntas = 28;
+				var preguntas = [];
+				
+				if (modo == 'CREAR' || modo 'EDITAR'){
+						
+					for (i = 1; i <= cantidad_preguntas; i++) {
+						
+						var seleccion = document.getElementById("activar:"+i).checked;
+						
+						if (seleccion == true){
+						
+							preguntas.push(i); //Guardo los id seleccionados	
+						}
+					}
+					
+					//TODO : Enviar modo por ajax junto a los ids
+					
+					if(preguntas.length == 0){
+						
+						alert("Seleccione preguntas para crear la guia");
+						
+					}else{
+						
+							alert("Subiendo guia");
+							
+							var jsonString = JSON.stringify(preguntas);
+							$.ajax({
+								type: "POST",
+								url: "scripts/subirGuia.php,
+								data: {data : jsonString}, 
+								cache: false,
 
-                    for (i = 1; i <= cantidad_preguntas; i++) {
-
-                        var seleccion = document.getElementById("activar:"+i).checked;
-
-                        if (seleccion == true){
-
-                            preguntas.push(i); //Guardo los id seleccionados	
-                        }
-                    }
-
-                    if(preguntas.length == 0){
-                        alert("Seleccione preguntas para crear la guia");
-
-                    }else{
-
-                        alert("Subiendo guia");
-
-                        var jsonString = JSON.stringify(preguntas);
-                        $.ajax({
-                            type: "POST",
-                            url: "scripts/subirGuia.php",
-                            data: {data : jsonString}, 
-                            cache: false,
-
-                            success: function(){
-                                alert("Guia subida correctamente");
-                            }
-                        });
-                    }
-                }
-
-                function menuAsignatura($idAsignatura, $asignatura){
-                    
-                    print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
-
-                }
+								success: function(){
+									alert("Guia subida correctamente");
+								}
+								
+								
+							});
+					}
+				}
+            }
             
         </script>
+		
     </head>
    
     <body>
@@ -134,8 +143,11 @@
 
                           <!-- Listar asignaturas -->
 
-                          
-
+                          <?php 
+                                for($i=0; $i<count($asignaturas);$i++){
+                                    menuAsignatura($idAsignaturas[$i], $asignaturas[$i]);
+                                }
+                           ?>
 
                       </ul>     
                   </li>
@@ -316,7 +328,7 @@
 
             <div class="form-group">
                 <div class="row text-center">
-                    <button type="button" class="btn btn-info" id="subir-guia">Subir guía</button>
+                    <button type="button" class="btn btn-info" id="subir-guia" onclick ="subir_preguntas('<?php print $modo;?>')">Subir guía</button>
                 </div>
             </div>
             </div><!-- END FORM -->
