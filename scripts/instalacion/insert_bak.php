@@ -15,15 +15,15 @@
 	$correo   = $_POST['correo'];
 	$pass     = $_POST['pass'];
 
-  $TablaAsignatura        = $dbprefix."Asignatura";
-  $TablaContenido         = $dbprefix."Contenido";
-  $TablaGuia              = $dbprefix."Guia";
-  $TablaPregunta          = $dbprefix."Pregunta";
-  $TablaRepositorio       = $dbprefix."Repositorio";
-  $TablaRespuesta         = $dbprefix."Respuesta";
-  $TablaSeleccMulti       = $dbprefix."SeleccionMultiple";
-  $TablaUsuario           = $dbprefix."Usuario";
-  $TablaUsuarioAsignatura = $dbprefix."UsuarioAsignatura";
+  $TablaAsignatura  = $dbprefix."Asignatura";
+  $TablaContenido = $dbprefix."Contenido";
+  $TablaGuia = $dbprefix."Guia";
+  $TablaPregunta = $dbprefix."Pregunta";
+  $TablaRepositorio = $dbprefix."Repositorio";
+  $TablaRespuesta = $dbprefix."Respuesta";
+  $TablaSeleccMulti = $dbprefix."SeleccionMultiple";
+  $TablaUsuario = $dbprefix."Usuario";
+
 
   //drop SQL
   $drop = "DROP TABLE IF EXISTS ";
@@ -41,6 +41,7 @@
       Primero se borra la base de datos si existe...
     */
     $dropDB = "DROP DATABASE IF EXISTS ".$dbname;
+
 
     /*if(*/  $con->query($dropDB); /*){
       echo "Se eliminó la base de datos ".$dbname." anterior...\n";
@@ -72,19 +73,21 @@
           $con->query($drop.$TablaRespuesta);
           $con->query($drop.$TablaSeleccMulti);
           $con->query($drop.$TablaUsuario);
-          $con->query($drop.$TablaUsuarioAsignatura);
 
           /*
-          ** Consultas utilizadas para crear las tablas 
-          */          
-          
+          *
+          *   Consultas utilizadas para crear las tablas 
+          *
+          */
+
           $creaAsignatura = "CREATE TABLE ".$TablaAsignatura.
                             "(
                                   Id int(11),
                                   NombreAsignatura varchar(50),
-                                  RutProfesorACargo varchar(20),
+                                  ProfesorACargo varchar(20),
                                   PRIMARY KEY (Id)
-                            )";         
+                            )";
+
 
 
           $creaContenido = "CREATE TABLE ".$TablaContenido.
@@ -109,7 +112,6 @@
           $creaPregunta = "CREATE TABLE ".$TablaPregunta.
                           "(
                               Id int(11),
-                              IdGuia int (11),
                               Enunciado varchar(100),
                               TipoRespuesta varchar(50),
                               PRIMARY KEY (Id)
@@ -117,7 +119,6 @@
 
           $creaRepositorio = "CREATE TABLE ".$TablaRepositorio.
                               "(
-                                  Id MEDIUMINT NOT NULL AUTO_INCREMENT,
                                   Ruta varchar(200),
                                   RutAlumno varchar(20),
                                   DescripcionBreve varchar(600),
@@ -127,7 +128,7 @@
                                   Aumento int(11),
                                   Fecha date,
                                   RutaDibujo varchar(200),
-                                  PRIMARY KEY (Id)
+                                  PRIMARY KEY (Ruta)
                               )";
 
           $creaRespuesta = "CREATE TABLE ".$TablaRespuesta.
@@ -142,8 +143,8 @@
           $creaSeleccMulti = "CREATE TABLE ".$TablaSeleccMulti.
                               "(
                                   IdPregunta int(11),
-                                  ValorAlternativa varchar(50),
-                                  Tipo varchar(10)
+                                  Alternativa varchar(50),
+                                  Letra varchar(10)
                                 )";
 
           $creaUsuario = "CREATE TABLE ".$TablaUsuario.
@@ -152,19 +153,13 @@
                               ApellidoP varchar(50),
                               ApellidoM varchar(50),
                               Rut varchar(20),
+                              IdAsignatura int(11),
                               Correo varchar(50),
                               Password varchar(100),
                               TipoUsuario varchar(20),
                               PRIMARY KEY (Rut)
                             )";
-          
-          $creaUsuarioAsignatura = "CREATE TABLE ".$TablaUsuarioAsignatura.
-                          "(
-                                RutUsuario varchar(20),
-	                              IdAsignatura int(11),
-                                PRIMARY KEY (RutUsuario, IdAsignatura)
-                            )";
-                            
+
           
           //crear tablas
          if( !$con->query($creaAsignatura) ) { /*echo "Tabla ".$TablaAsignatura." creada.\n";*/ echo "0";}    
@@ -175,7 +170,6 @@
          if( !$con->query($creaRespuesta)){ /*echo "Tabla ".$TablaRespuesta." creada.\n";*/ echo "0";}
          if( !$con->query($creaRepositorio)){ /*echo "Tabla ".$TablaRepositorio." creada.\n";*/ echo "0";}
          if( !$con->query($creaPregunta)){ /*echo "Tabla ".$TablaPregunta." creada.\n";*/ echo "0";}
-         if( !$con->query($creaUsuarioAsignatura)){ /*echo "Tabla ".$TablaUsuarioAsignatura." no fue creada.\n"*/; echo "0";}
 
         $alterTable = "ALTER TABLE ";
 
@@ -185,85 +179,71 @@
           Creacion de claves foraneas 
 
         */
-        
         if(!$con->query($alterTable.$TablaAsignatura." ADD CONSTRAINT fk_".$TablaAsignatura."_1 FOREIGN KEY 
-                                                    (RutProfesorACargo) REFERENCES ".$TablaUsuario. "(Rut) 
+                                                    (ProfesorACargo) REFERENCES ".$TablaUsuario. "(Rut) 
                                                     ON DELETE NO ACTION ON UPDATE NO ACTION")){
-          echo "alter asignatura\n";
-          //echo "0";
+          //echo "alter asignatura\n";
+          echo "0";
         }
-        
-          
+
         if(!$con->query($alterTable.$TablaContenido." ADD CONSTRAINT fk_".$TablaContenido."_1 FOREIGN KEY 
                                                     (IdGuia) REFERENCES ".$TablaGuia."(Id)
                                                     ON DELETE NO ACTION ON UPDATE NO ACTION")){
-          echo "alter contenido 1\n";
-          //echo "0";
+          //echo "alter contenido 1\n";
+          echo "0";
         }
 
         if(!$con->query($alterTable.$TablaContenido." ADD CONSTRAINT fk_".$TablaContenido."_2 FOREIGN KEY
                                                     (IdPregunta) REFERENCES ".$TablaPregunta."(Id)")){
-          echo "alter contenido 2\n";
-          //echo "0";
+          //echo "alter contenido 2\n";
+          echo "0";
         }
-          
+
         if(!$con->query($alterTable.$TablaGuia." ADD CONSTRAINT fk_".$TablaGuia."_1 FOREIGN KEY 
                                                 (IdAsignatura) REFERENCES ".$TablaAsignatura."(Id)")){
 
-          echo "alter guia\n";
-          //echo "0";
+          //echo "alter guia\n";
+          echo "0";
         }
 
-        if(!$con->query($alterTable.$TablaPregunta." ADD CONSTRAINT fk_".$TablaPregunta."_1 FOREIGN KEY 
-                                                (IdGuia) REFERENCES ".$TablaGuia."(Id)")){
-
-          echo "alter guia\n";
-          //echo "0";
-        }
-        
         if(!$con->query($alterTable.$TablaRepositorio. " ADD CONSTRAINT fk_".$TablaRepositorio."_1 FOREIGN KEY
                                                         (RutAlumno) REFERENCES ".$TablaUsuario."(Rut)")){
 
-          echo "alter Repositorio\n";
-          //echo "0";
+          //echo "alter Repositorio\n";
+          echo "0";
         }
 
         if(!$con->query($alterTable.$TablaRespuesta. " ADD CONSTRAINT fk_".$TablaRespuesta."_1 FOREIGN KEY
                                                       (IdGuia) REFERENCES ".$TablaGuia."(Id)")){
-          echo "alter respuesta 1\n";
-          //echo "0";
+          //echo "alter respuesta 1\n";
+          echo "0";
         }
 
         if(!$con->query($alterTable.$TablaRespuesta. " ADD CONSTRAINT fk_".$TablaRespuesta."_2 FOREIGN KEY
                                                       (IdPregunta) REFERENCES ".$TablaPregunta."(Id)")){
-          echo "alter respuesta 2\n";
-          //echo "0";
+          //echo "alter respuesta 2\n";
+          echo "0";
         }
 
         if(!$con->query($alterTable.$TablaRespuesta." ADD CONSTRAINT fk_".$TablaRespuesta."_3 FOREIGN KEY
                                                       (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)")){
-          echo "alter respuesta 3\n";
-          //echo "0";
+          //echo "alter respuesta 3\n";
+          echo "0";
         }
 
         if(!$con->query($alterTable.$TablaSeleccMulti." ADD CONSTRAINT fk_".$TablaSeleccMulti."_1 FOREIGN KEY
                                                       (IdPregunta) REFERENCES ".$TablaPregunta."(Id)")){
-          echo "alter SeleccionMultiple\n";
-          //echo "0";
+          //echo "alter SeleccionMultiple\n";
+          echo "0";
         }
 
-
-        if(!$con->query($alterTable.$TablaUsuarioAsignatura. " ADD CONSTRAINT fk_".$TablaUsuarioAsignatura."_1 FOREIGN KEY
-                                                    (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)")){
-          echo "alter usuario asignatura 1\n";
-          //echo "0";
-        }
-        
-        if(!$con->query($alterTable.$TablaUsuarioAsignatura. " ADD CONSTRAINT fk_".$TablaUsuarioAsignatura."_2 FOREIGN KEY
+        if(!$con->query($alterTable.$TablaUsuario. " ADD CONSTRAINT fk_".$TablaUsuario."_1 FOREIGN KEY
                                                     (IdAsignatura) REFERENCES ".$TablaAsignatura."(Id)")){
-          echo "alter usuario asignatura 2\n";
-          //echo "0";
+          //echo "alter usuario\n";
+          echo "0";
         }
+
+
         /*
 
           Creacion e insercion en la base de datos de la cuenta de administrador
@@ -317,16 +297,16 @@
                               Ademas de otras opciones
                           */
 
-                          define('DBHOST', '".$host."');// MySQL host address - localhost is usually fine
+                          define('DBHOST', '".$host."');   // MySQL host address - localhost is usually fine
                           define('DBUSER', '".$dbuser."'); // db username
                           define('DBPASS', '".$dbpass."'); // db password
                           define('DBNAME', '".$dbname."'); // nombre de la base de datos creada previamente...
 
-                          define('DEBUG', false);// set to false when done testing
+                          define('DEBUG', false);          // set to false when done testing
 
-                          define('CHARSET', 'utf8'); // sets the charset of your database for communication
-                          define('DBDRIVER', 'mysql');// database driver to use
-                          define('DBPORT', '".$port."'); // database port for connection
+                          define('CHARSET', 'utf8');       // sets the charset of your database for communication
+                          define('DBDRIVER', 'mysql');     // database driver to use
+                          define('DBPORT', '".$port."');   // database port for connection
 
                           //definicion de las tablas
                           define('ASIGNATURA', '".$TablaAsignatura."');
@@ -336,8 +316,7 @@
                           define('REPOSITORIO', '".$TablaRepositorio."');
                           define('RESPUESTA', '".$TablaSeleccMulti."');
                           define('USUARIO', '".$TablaUsuario."');
-                          define('USUARIOASIGNATURA', '".$TablaUsuarioAsignatura."');
-                          ?>
+                  ?>
                       ";
 
                       fwrite($configFile, $txt);
@@ -346,28 +325,28 @@
                       //Se escribio correctamente en el archivo...
                       echo "1";
           }else{
-              echo "No se puede escribir en el archivo\n";
-              //echo "0";
+              //echo "No se puede escribir en el archivo\n";
+              echo "0";
           }
 
         }else{
-          echo "no se pudo crear el administrador\n";
-          //echo "0";
+          //echo "no se pudo crear el administrador\n";
+          echo "0";
         }
 
         }else{
-          echo "error al acceder a la BD\n"; 
-          //echo "0";
+          //echo "error al acceder a la BD\n"; 
+          echo "0";
         }
 
     }else{
-      echo "No se pudo crear la base de datos ".$dbname."\n";
-      //echo "0";
+      //echo "No se pudo crear la base de datos ".$dbname."\n";
+      echo "0";
     }
 
 
   }catch(PDOException $e){
-    echo "error de conexion: ".$e->getMessage()."\n";
-    //echo "0";
+    //echo "error de conexion: ".$e->getMessage()."\n";
+    echo "0";
   }
 ?>

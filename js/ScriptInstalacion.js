@@ -58,7 +58,7 @@ $(document).ready(function(){
 
 	*/
 	$("#checkdb").click(function(event){
-
+		
 		//primero valida los pasos de la ventana 1
 		var fv = formValidation(event);
 
@@ -67,15 +67,13 @@ $(document).ready(function(){
 			var port = document.getElementById('port').value;
 			var dbuser = document.getElementById('dbuser').value;
 			var dbpass = document.getElementById('dbpass').value;
-
 			/*
 				Envio de formulario por medio de ajax
 				Muestra el estado de la conexion en pantalla
 			*/
-
 			$.ajax({
 				type: 'POST',
-				url: 'scripts/bd/mysql_connection.php',
+				url: 'scripts/bd/probarConexion.php',
 				data:{
 					'host':host,
 					'port':port,
@@ -218,6 +216,7 @@ function formData(rut,nombre,apaterno,amaterno,correo,pass) {
 	}).done(function(result){
 				if(result=="1"){
 					alert("Base de datos y administrador creados exitosamente");
+					window.location = "index.php";
 					//window.location = "galeria...";
 				}else if(result=="0"){
 					alert("Hubo un error con la creacion de la base de datos");

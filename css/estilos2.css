@@ -1,20 +1,38 @@
-.container{
-	display: table;
-    border: 2px solid #000;
-    width: 300px;
-    text-align: center;
-    margin: auto;
-    border-radius: 40px;
+.container-fluid{
+    width:auto;
+	border:  auto;
+	margin: auto;
+ 
 }
+
 .form-group{
     vertical-align: middle;
     padding: 10px;
+    text-align: center; 
+    float: none; 
+    margin: 0 auto; 
+    display: block; 
+    width: auto; 
+    height: auto;
+
 }
+
 .form-control{
 
 }
-.checkbox{}
-.btn-default{ 
+
+.checkbox{
+	vertical-align: middle;
+    padding: 10px;
+    text-align: center; 
+    float: none; 
+    margin: 0 auto; 
+    display: block; 
+    width: auto; 
+    height: auto;
+}
+
+.btn-login{ 
 	color:#333;
 	background-color:#fff;
 	border-color:#ccc 
@@ -27,7 +45,7 @@ h1{margin:.67em 0;font-size:2em}
 
 .form-control{
 	display: block;
-	width: 100%;
+	width: 90%;
 	height: 34px;
 	padding: 6px 12px;
 	font-size: 14px;
@@ -37,5 +55,4 @@ h1{margin:.67em 0;font-size:2em}
 	background-image: none;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-
 }
