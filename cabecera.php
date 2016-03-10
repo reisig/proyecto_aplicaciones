@@ -23,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href="css/photoswipe.css">
         <link rel="stylesheet" type="text/css" href="css/default-skin/default-skin.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/guia.css">
 
         <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -36,11 +37,46 @@
     </head>
 
     <body>
-
-        <div class="envoltura">
-    
-            <header>
-            
-                <!-- aqui va el menu -->
-
-            </header>
+        <!-- Barra de navegacion -->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="row">
+                    <!-- LEFT SECTION -->
+                    <div class="navbar-header">
+                        <div class="col-md-4">
+                            <img src="imagenes/logo-ULS.png" id="logo-uls" class="center-block img-circle">
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="navbar-brand">Departamento de Biología</h6>
+                        </div>
+                    </div>
+                    <!-- RIGHT SECTION -->
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="#">Asignaturas</a>
+                            </li>
+                            <li>
+                                <a href="#">Galería</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Guías Resueltas<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- Listar asignaturas -->
+                                    <li><a href="#">Asignatura1</a></li>
+                                    <li><a href="#">Asignatura2</a></li>
+                                    <li><a href="#">Asignatura3</a></li>
+                                    <li><a href="#">Asignatura4</a></li>
+                                    <li><a href="#">Asignatura5</a></li> 
+                                </ul>     
+                            </li>
+                            <li class="sign-out">
+                                <a href="#">Cerrar Sesión <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </body>   
+</html>
