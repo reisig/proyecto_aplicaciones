@@ -93,11 +93,7 @@
 
           $creaContenido = "CREATE TABLE ".$TablaContenido.
                             "(
-<<<<<<< HEAD
                                 IdGuia int(11),
-=======
-                            	IdGuia int(11),
->>>>>>> 8896ba09baa4db9fe67d40f46cc22f3f5f224bd8
                                 IdPregunta int(11),
                                 Respuesta varchar(500),
                                 PRIMARY KEY (IdGuia, IdPregunta)
