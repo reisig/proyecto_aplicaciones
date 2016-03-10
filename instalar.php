@@ -1,12 +1,8 @@
 <?php
-	/**
-	* Clase encargada de la instalación de la
-	*	base de datos en el servidor
-	*
-	* @package RepBiologia
-	* @since RepBiologia 1.0
-	*/
-
+	$fileDir = __DIR__."/scripts/bd/config.php";
+	if (file_exists($fileDir)){
+		header("Location: index.php");
+	}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +11,7 @@
 		<meta charset="UTF-8"> 
 		<title>Instalación base de datos MySQL</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/estilo.css">
+		<link rel="stylesheet" type="text/css" href="css/installstyle.css">
 		<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/ScriptInstalacion.js"></script>
