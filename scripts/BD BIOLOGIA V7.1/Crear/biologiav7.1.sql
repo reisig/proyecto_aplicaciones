@@ -33,7 +33,7 @@ create table Guia(
 );			
 			
 create table UsuarioAsignatura(
-	RutUusuario varchar(20) not null,
+	RutUsuario varchar(20) not null,
 	IdAsignatura int (11) not null,
 	foreign key(RutUsuario) references Usuario(Rut)
 	on delete no action on update no action,
