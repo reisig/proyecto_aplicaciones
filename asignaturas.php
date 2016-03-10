@@ -13,10 +13,22 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
         
         <?php 
-            function listadoAsignatura($asignatura){
+            /*Datos de conexion*/
+            require('scripts/conexion.php');
+        
+            //$rutProfesor = $_GET['rut']; //Viene de login
+            $rutProfesor = '15302958-k';
+        
+            //print "<h3>Rut_Profesor: ".$rutProfesor."</h3>";
+        
+            function listadoAsignatura($idAsignatura, $asignatura, $rutProfesor){
                 print   "<div class=\"col-md-9\">";
                 print        "<h3 id=\"titulo-asignatura\">Nombre: <strong>".$asignatura."</strong></h3>";
                 print   "</div>";
@@ -24,18 +36,19 @@
                 print    "<div class=\"col-md-3\">";
                 print        "<div class=\"row\">"; 
                 print            "<div class=\"col-xs-1\">";
-                print                "<a href=\"#\" id=\"verAsignatura:\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>"; 
+                print                "<a href=\"guias.php?id=".$idAsignatura."&rut=".$rutProfesor."\" id=\"verAsignatura:\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Listado de guías\"><span class=\"glyphicon glyphicon-eye-open\"></span></a>"; 
                 print            "</div>";
 
                 print            "<div class=\"col-xs-1\">";
-                print                "<a href=\"#\" id=\"eliminarAsignatura:\"><span class=\"glyphicon glyphicon-trash\"></span></a>";
+                print                "<a href=\"#\" id=\"eliminarAsignatura:\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"Eliminar asignatura\"><span class=\"glyphicon glyphicon-trash\"></span></a>";
                 print            "</div>"; 
-                print        "</div>"; 
+                print        "</div>";
                 print    "</div>";    
             }
         
-            function menuAsignatura($asignatura){
-                print "<li><a href=\"#\"></a>".$asignatura."</li>";
+            function menuAsignatura($idAsignatura, $asignatura){
+                print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
+                
             }
         ?>
     </head>
@@ -44,20 +57,16 @@
         
 		<?php
 		
-			/*Datos de conexion*/
-			require('scripts/conexion.php');
-        
-            //$rutProfesor = $_GET['rut'];
-            $rutProfesor = '15302958-k';
-		
             /*Recuperar listado de asignaturas*/
             $stmt = $conn->prepare("SELECT Id, NombreAsignatura FROM Asignatura WHERE RutProfesorACargo=:rut");
             $stmt->bindParam(':rut', $rutProfesor);
             $stmt->execute();
         
+            $idAsignatura = array();
             $asignaturas = array();
             
             while($row = $stmt->fetch()){
+                array_push($idAsignatura, $row['Id']);
                 array_push($asignaturas, $row['NombreAsignatura']);
             } 
         
@@ -87,26 +96,33 @@
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a href="#">Asignaturas</a>
+                                <a>Asignaturas</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Guías Resueltas<span class="caret"></span></a>
+                                <ul class="dropdown-menu" id="listado-secundario">
+                                   
+                                    <!-- Listar asignaturas -->
+                                    
+                                    <?php 
+                                        for($i=0; $i<count($asignaturas);$i++){
+                                            menuAsignatura($idAsignatura[$i],$asignaturas[$i]);
+                                        }
+                                    ?>
+                                    
+                                    
+                                </ul>     
                             </li>
                             <li>
                                 <a href="#">Galería</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Guías Resueltas<span class="caret"></span></a>
-                                <ul class="dropdown-menu" id = "listado-secundario">
-                                   
+                            <li class="dropdown sign-out">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><?php print $profesor;?><span class=" caret"></span></a>
+                                <ul class="dropdown-menu">
                                     <!-- Listar asignaturas -->
-                                    <?php 
-										for($i=0; $i<count($asignaturas);$i++){
-											menuAsignatura($asignaturas[$i]);
-										}
-                                    ?>
-                                    
+                                    <!--<li class="divider"></li>-->
+                                    <li><a href="#">Cerrar Sesión</a></li>
                                 </ul>     
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="sign-out dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">NOMBRE PROFESOR<span class="sr-only">(current)</span></a>
                             </li>
                         </ul>
                     </div>
@@ -128,7 +144,7 @@
                
                 <?php 
                     for($i=0; $i<count($asignaturas);$i++) {
-                        listadoAsignatura($asignaturas[$i]);
+                        listadoAsignatura($idAsignatura[$i], $asignaturas[$i], $rutProfesor);
                     }
                 ?>
                     
