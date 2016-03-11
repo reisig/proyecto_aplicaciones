@@ -7,7 +7,7 @@
 
 	if(file_exists($fileDir) && isset($_SESSION['user'])==""){
 
-		header("Location: loginx.php");
+		header("Location: login.php");
 
 	}else if (!file_exists($fileDir)){
 			header("Location: instalar.php");

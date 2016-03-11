@@ -126,10 +126,6 @@
 
            <button type="submit" class="btn-modificar" name="btn-modificar">Modificar Usuario</button>
 
-      </form>
-
-
-
-         
+      </form>         
     </body>
     </html>
