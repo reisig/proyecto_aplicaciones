@@ -14,7 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="css/installstyle.css">
 		<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/ScriptInstalacion.js"></script>
+		<script type="text/javascript" src="js/script-instalacion.js"></script>
 	</head>
 	<body>
 		<div id="mhead"><h2>Instalación Base de datos MySQL</h2></div>

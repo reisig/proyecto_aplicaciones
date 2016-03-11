@@ -50,7 +50,7 @@ $(document).ready(function(){
 
 	/*
 		Evento de clickear en "verificar conexion"
-
+probar
 	*/
 	$("#checkdb").click(function(event){
 		
@@ -68,7 +68,7 @@ $(document).ready(function(){
 			*/
 			$.ajax({
 				type: 'POST',
-				url: 'scripts/bd/probarConexion.php',
+				url: 'scripts/bd/probar-conexion.php',
 				data:{
 					'host':host,
 					'port':port,

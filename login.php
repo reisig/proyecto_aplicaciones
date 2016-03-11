@@ -1,7 +1,7 @@
 <?php
     session_start();
     require_once __DIR__."/scripts/bd/consultas.php";
-    require_once __DIR__."/scripts/usuario.php";
+    require_once __DIR__."/scripts/usuario/clase-usuario.php";
 
     if(isset($_SESSION['user'])!=""){
       header("Location: index.php");
@@ -20,7 +20,7 @@
               <?php
               $_SESSION['user'] = $usuario->rut;
               if($usuario->tipoUsuario = "administrador"){
-                  header('Location: /proyecto_aplicaciones/verUsuarios.php');
+                  header('Location: /proyecto_aplicaciones/ver-usuarios.php');
               }else if ($usuario->tipoUsuario = "profesor"){
                   header('Location: /proyecto_aplicaciones/guias.php');
               }else if ($usuario->tipoUsuario = "alumno"){

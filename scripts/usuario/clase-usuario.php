@@ -1,6 +1,6 @@
 <?php
 
-	include_once (__DIR__.'/bd/consultas.php');
+	include_once (dirname(__DIR__).'/bd/consultas.php');
 
 	class usuario{
 

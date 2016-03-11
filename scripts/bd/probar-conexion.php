@@ -3,7 +3,7 @@
 	/*
 	
 		Script para probar la conexion con la base de datos...
-
+		utilizado en el modulo de instalacion unicamente
 	*/
 	
 	$host = $_POST['host'];

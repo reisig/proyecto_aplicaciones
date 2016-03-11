@@ -65,7 +65,7 @@
 
           require_once __DIR__."/scripts/bd/dbc.php";
           require_once __DIR__."/scripts/bd/consultas.php";
-          require_once __DIR__."/scripts/usuario.php";
+          require_once __DIR__."/scripts/usuario/clase-usuario.php";
 
           $usuarios = consultas::getUsuarios();
           if($usuarios[0] != ""){
@@ -77,15 +77,15 @@
                 $rut = $usr['Rut'];
                 echo $nombre.'  '.$apellidoP.'  '.$apellidoM.'  '.$correo.'
                  <a href="asignaturas.php?id='.$rut.'">Asignaturas</a>
-                 <a href="modificarUsuarios.php?id='.$rut.'">Modificar</a> 
+                 <a href="modificar-usuarios.php?id='.$rut.'">Modificar</a> 
                  <a href="eliminar.php?id='.$rut.'">Eliminar</a></br>'; 
             }
           }else{
             echo "No hay usuarios agregados.\n";
           }
         ?>
-        <a style="display: inline-block" id = "btn_profesor" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/scripts/usuarios.php">Agrega Profesor</a> 
-         <a style="display: inline-block" id = "btn_alumno" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/scripts/usuarios.php">Agrega Alumno</a> 
+        <a style="display: inline-block" id = "btn_profesor" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/agregar-usuarios.php">Agrega Profesor</a> 
+         <a style="display: inline-block" id = "btn_alumno" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/agregar-usuarios.php">Agrega Alumno</a> 
       </form>
 
        <footer>

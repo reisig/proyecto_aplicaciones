@@ -1,5 +1,5 @@
 <?php
-  require_once __DIR__."/scripts/usuario.php";
+  require_once __DIR__."/scripts/usuario/clase-usuario.php";
   require_once __DIR__."/scripts/bd/consultas.php";
 
   session_start();

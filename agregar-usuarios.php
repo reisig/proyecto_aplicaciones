@@ -1,6 +1,6 @@
 <?php
 
-  require_once __DIR__."/bd/consultas.php";
+  require_once __DIR__."/scripts/bd/consultas.php";
 
   //primero verificar si esta algun campo vacio!!!!
 
@@ -38,8 +38,8 @@
 <html>
   <head>
     <title> Creacion de Usuarios </title>
-      <link rel="stylesheet" type="text/css" href="../css/estilos2.css">
-      <link href="../css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="css/estilos2.css">
+      <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
        p {color:black; width:80%; margin-left:20px;}
     </style>
@@ -65,7 +65,7 @@
         <div class="navbar-right">
           <ul class="nav navbar-nav">
             <li class="active">
-              <a href="../verUsuarios.php">Profesores</a>
+              <a href="ver-usuarios.php">Profesores</a>
             </li>
             <li>
               <a href="galeria.php">Galería</a>
@@ -74,7 +74,7 @@
               <a href="guias_resueltas.html">Configuracion</a>
             </li>
             <li class="sign-out">
-              <a href="../logout.php">Cerrar Sesión <span class="sr-only">(current)</span></a>
+              <a href="logout.php">Cerrar Sesión <span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </div>
