@@ -2,10 +2,6 @@
 
 	Script de validacion e insercion de datos para la instalacion de la base de datos
 
-
-
-
-
 	----------------Eventos----------------
 
 */
@@ -36,7 +32,6 @@ $(document).ready(function(){
 		//desaparecer la ventana anterior y mostrar la siguiente
 		current_fs.hide();
 		next_fs.show(); 
-
 	});
 
 	/*

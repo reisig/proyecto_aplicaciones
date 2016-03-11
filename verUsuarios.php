@@ -1,9 +1,9 @@
+
 <!-- Este es un comentario en HTML                                -->
 <!-- DeclaraciÃ³n de tipod e documento                             -->
 <!DOCTYPE html>
 <!-- Inicio del cÃ³digo HTML                                       -->
 <html>
-
 <!-- Inicio del encabezado HTML                                   -->
   <head>
     <title> Ver Usuarios </title>
@@ -65,15 +65,27 @@
 
           require_once __DIR__."/scripts/bd/dbc.php";
           require_once __DIR__."/scripts/bd/consultas.php";
-          require_once __DIR__."/usuario.php";
+          require_once __DIR__."/scripts/usuario.php";
 
           $usuarios = consultas::getUsuarios();
-          foreach($usuarios as $usr){
-            echo $usr['Nombre'].'  '.$usr['ApellidoP'].'  '.$usr['ApellidoM'].'  '.$usr['Correo'].' <input type="button" name="abs(number)signaturas" class="asignaturas" id="'.$usr['Rut'].'" value ="asignaturas" /><input type ="button" name="modificar" class="modificar" id="'.$usr['Rut'].'" value="modificar"/> <input type="button" name="eliminar" class="eliminar" id = "'.$usr['Rut'].'" value ="eliminar"/></br>';
+          if($usuarios[0] != ""){
+              foreach($usuarios as $usr){
+                $nombre = $usr['Nombre'];
+                $apellidoP = $usr['ApellidoP'];
+                $apellidoM = $usr['ApellidoM'];
+                $correo = $usr['Correo'];
+                $rut = $usr['Rut'];
+                echo $nombre.'  '.$apellidoP.'  '.$apellidoM.'  '.$correo.'
+                 <a href="asignaturas.php?id='.$rut.'">Asignaturas</a>
+                 <a href="modificarUsuarios.php?id='.$rut.'">Modificar</a> 
+                 <a href="eliminar.php?id='.$rut.'">Eliminar</a></br>'; 
+            }
+          }else{
+            echo "No hay usuarios agregados.\n";
           }
         ?>
-        <a  style="display: inline-block" id = "btn_profesor" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/usuarios.php">Agrega Profesor</a> 
-         <a  style="display: inline-block" id = "btn_alumno" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/usuarios.php">Agrega Alumno</a> 
+        <a style="display: inline-block" id = "btn_profesor" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/scripts/usuarios.php">Agrega Profesor</a> 
+         <a style="display: inline-block" id = "btn_alumno" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/scripts/usuarios.php">Agrega Alumno</a> 
       </form>
 
        <footer>

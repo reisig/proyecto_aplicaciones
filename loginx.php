@@ -1,7 +1,7 @@
 <?php
     session_start();
     require_once __DIR__."/scripts/bd/consultas.php";
-    require_once "usuario.php";
+    require_once __DIR__."/scripts/usuario.php";
 
     if(isset($_SESSION['user'])!=""){
       header("Location: index.php");
@@ -13,7 +13,11 @@
 
       if(consultas::verificarLogin($rut, $password)){
           $usuario = new Usuario($rut);
+          echo $usuario->tipoUsuario;
           if($usuario){
+              ?>
+                  <script>alert($usuario->tipoUsuario);</script>
+              <?php
               $_SESSION['user'] = $usuario->rut;
               if($usuario->tipoUsuario = "administrador"){
                   header('Location: /proyecto_aplicaciones/verUsuarios.php');

@@ -1,6 +1,6 @@
 <?php
 
-	include_once (__DIR__.'/scripts/bd/consultas.php');
+	include_once (__DIR__.'/bd/consultas.php');
 
 	class usuario{
 
@@ -34,7 +34,6 @@
 			self::$instance = $this;			
 		}
 
-
 		public function __construct2($nombre, $apellidoP, $apellidoM, $rut, $correo, $password, $tipoUsuario){
 			$this->nombre = $nombre;
 			$this->apellidoP = $apellidoP;
@@ -43,7 +42,6 @@
 			$this->correo = $correo;
 			$this->password = $password;
 			$this->tipoUsuario = $tipoUsuario;
-
 			self::$instance = $this;
 		}
 
@@ -69,18 +67,11 @@
 			}
 		}
 
-		/*
-		*
-		*
-		*
-		*/
-
 		public static function getInstance(){
      		if (!is_null(self::$instance)) return self::$instance;
      		self::$instance = new self;
      		return self::$instance;
    		}
-
 
 		public function __get($var){
 			if(property_exists('usuario', $var)){

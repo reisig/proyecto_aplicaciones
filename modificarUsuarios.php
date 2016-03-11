@@ -1,37 +1,63 @@
 <?php
+  require_once __DIR__."/scripts/usuario.php";
+  require_once __DIR__."/scripts/bd/consultas.php";
+
+  session_start();
+  if(!isset($_SESSION['user'])){
+    header("Location: index.php");
+  }
+
+  if(isset($_GET['id'])){
+    $usuario = new Usuario($_GET['id']);
+    if($usuario->nombre != ""){
+      $nombre = $usuario->nombre;
+      $apellidoP = $usuario->apellidoP;
+      $apellidoM = $usuario->apellidoM;
+      $rut = $usuario->rut;
+      $correo = $usuario->correo;
+      $password = $usuario->password;
+      $tipo = $usuario->tipoUsuario;
+    }else{
+      die("El usuario no existe!");
+    }
+  }else if(isset($_POST['btn-modificar'])){
+      $n_nombre = $_POST['nombre'];
+      $n_apellidoP = $_POST['apellidoP'];
+      $n_apellidoM = $_POST['apellidoM'];
+      $n_rut = $_POST['rut'];
+      $n_correo = $_POST['correo'];
+      $n_password = $_POST['password'];
+      $n_tipo = $_POST['tipo'];
+
+      //solo modifica los datos de usuario
+      if($rut == $n_rut){
+        if(consultas::modificarUsuario($n_nombre, $n_apellidoP, $n_apellidoM, $rut, $n_correo, $n_password)){
+          ?>
+              <script> alert("Usuario modificado correctamente");</script>
+          <?php
+          header("Location: verUsuarios.php");
+        }
+      }else{
+          $asignaturas = consultas::getAsignaturasUsuario($n_rut);
+          if ($tipo = "alumno"){
+              //reasignar rut
+             /* if(consultas::eliminarAlumno($n_rut)){
 
 
-$nombre_usuario = 'patricio';
+              }*/
+          }else if ($tipo = "profesor"){
+            //reasignar rut
+              echo("existe: ".consultas::rutExiste($n_rut));
 
-$usuario_bd = 'www';
-$passwd_bd = '12345';
-try {
-//  print "Conectando";
-    $conn = new PDO('mysql:host=localhost;dbname=usuarios;charset=utf8', $usuario_bd, $passwd_bd);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    print "¡Error!: " . $e->getMessage() . "<br/>";
-    die();
-}
+          /*if(consultas::eliminarProfesor($rut)){
 
-  $stmt = $conn->prepare("SELECT * FROM biologia WHERE nombre = :nombre");
-  $stmt->bindParam(':nombre',$nombre_usuario);
-  $stmt->execute();
+            }*/
 
-    if($row = $stmt->fetch()){
-            
-            $nombre = $row['nombre'];
-            $apellidoP = $row['apellidoP'];
-            $apellidoM = $row['apellidoM'];
-            $rut = $row['rut'];
-            $correo = $row['correo'];
-            $password = $row['clave'];
-            $tipo = $row['tipo']; 
+          }
+      }
+  }
 
-        }else{
-           
- 
-  ?>
+?>
 
 
 
@@ -58,7 +84,7 @@ try {
       
       <h1> Modifica Profesor </h1>
 
-      <form name="agrega_profesor">
+      <form name="agrega_profesor" method="post">
 
         <div class="form-group">
           
@@ -68,37 +94,37 @@ try {
 
         <div class="form-group">
 
-          Apellido Paterno: <input type="text" name="apellidoP" class="form-control" id="apellidoP">
+          Apellido Paterno: <input type="text" name="apellidoP" class="form-control" id="apellidoP" value="<?php echo $apellidoP; ?>">
 
         </div>
         <div class="form-group">
 
-          Apellido Materno: <input type="text" name="apellidoM" class="form-control" id="apellidoM">
+          Apellido Materno: <input type="text" name="apellidoM" class="form-control" id="apellidoM" value="<?php echo $apellidoM; ?>">
 
         </div>
         <div class="form-group">
 
-          Rut: <input type="text" name="rut" class="form-control" id="rut">
+          Rut: <input type="text" name="rut" class="form-control" id="rut" value ="<?php echo $rut; ?>">
 
         </div>
         <div class="form-group">
 
-          Correo: <input type="email" name="correo" class="form-control" id="email">
+          Correo: <input type="email" name="correo" class="form-control" id="email" value ="<?php echo $correo; ?>">
 
         </div>
         <div class="form-group">
 
-          Contraseña: <input type="password" name="clave" class="form-control" id="pwd">
+          Contraseña: <input type="password" name="password" class="form-control" id="pwd" value="<?php echo $password; ?>">
 
         </div>
          <div class="form-group">
 
-          Tipo de Usuario: <input type="text" name="tipo" class="form-control" id="tipo">
+          Tipo de Usuario: <input type="text" name="tipo" class="form-control" id="tipo" value="<?php echo $tipo; ?>">
 
         </div>
         
 
-           <button type="submit" class="btn-default">Agrega Profesor</button>
+           <button type="submit" class="btn-modificar" name="btn-modificar">Modificar Usuario</button>
 
       </form>
 
@@ -107,9 +133,3 @@ try {
          
     </body>
     </html>
-<?php
-}
-$conn = null;
-
-
-?>

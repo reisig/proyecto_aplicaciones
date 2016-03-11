@@ -30,9 +30,7 @@ require_once( __DIR__. '/cabecera.php' );
 
 					<div class="cr-fotografia col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Fotografia" id="fotografia" class="img-responsive" /></div>
 					<div class="cr-dibujo col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Dibujo fotografia" id="dibujo" class="img-responsive" /></div>
-
 				</div>
-
 			</div>
 
 		<?php //endif; ?>

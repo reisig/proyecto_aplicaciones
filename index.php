@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require_once "usuario.php";
+	require_once __DIR__."/scripts/usuario.php";
 
 	$fileDir = __DIR__."/scripts/bd/config.php";
 
@@ -11,7 +11,6 @@
 
 	}else if (!file_exists($fileDir)){
 			header("Location: instalar.php");
-
 	}else{
 		$usuario = new Usuario($_SESSION['user']);
 		if($usuario->tipoUsuario = "administrador"){
