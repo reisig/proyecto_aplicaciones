@@ -7,18 +7,14 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head
         content must come *after* these tags -->
         <title>Listado Guias</title>
+        
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/guia.css" rel="stylesheet">
 		
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!--<script src="js/jquery-1.12.0.min.js"></script>-->
         <script src="js/bootstrap.min.js"></script>
-		
-        <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();   
-            });
-        </script>
 		
 		<?php
 		
@@ -73,18 +69,49 @@
                 print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$nombreAsignatura."</a></li>";
             }
 		?>
-		
-		<script>
-		
-		
-		
-		
-		</script>
+   
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+
+            function direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo){
+				
+				/*console.log("Rut: "+rutProfesor);
+				console.log("Asignatura: "+idAsignatura);
+				console.log("Guia: "+idGuia);
+				console.log("modo: "+modo);*/
+				
+                location.href="guia.php?rut="+rutProfesor+"&idA="+idAsignatura+"&idG="+idGuia+"&modo="+modo;
+            }
+            
+            function crearGuia(){
+
+                var modo = "CREAR";
+                var estado = "INACTIVA";
+                var idAsignatura = <?php print $idAsignatura; ?>;    
+                var tituloGuia = document.getElementById("titulo-guia-nueva").value;
+                var descripcion = document.getElementById("descripcion-guia-nueva").value; 
+                var rutProfesor = <?php print '"'.$rutProfesor.'"'; ?>;           
+                
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/crearGuia.php",
+                    data: { idAsig : idAsignatura, titulo: tituloGuia, descripcionGuia : descripcion, estadoGuia : estado }, 
+                    cache: false,
+
+                    success: function(respuesta){
+                        var idGuia = respuesta; 
+                        //alert(idGuia);
+                        direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo);
+                    }
+                });
+            }
+        </script>
     </head>
     
     <body>
         <?php
-
 
             /*Recuperar listado de asignaturas*/
             $stmt = $conn->prepare("SELECT Id, NombreAsignatura FROM Asignatura WHERE RutProfesorACargo=:rut");
@@ -98,7 +125,6 @@
                 array_push($idAsignaturas, $row['Id']);
                 array_push($asignaturas, $row['NombreAsignatura']);
             } 
-
         ?>       
        
         <!-- nav -->
@@ -226,11 +252,11 @@
                         <form>
                             <div class="form-group">
                                 <label class="control-label">Titulo:</label>
-                                <input type="text" class="form-control" id="recipient-name" placeholder="Ingrese título de la guía">
+                                <input type="text" class="form-control" id="titulo-guia-nueva" placeholder="Ingrese título de la guía" required>
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Descripción:</label>
-                                <textarea class="form-control" id="message-text" placeholder="Ingrese descripción de la guía"></textarea>
+                                <textarea class="form-control" id="descripcion-guia-nueva" placeholder="Ingrese descripción de la guía" required></textarea>
                             </div>
                         </form>
                     </div>
@@ -238,7 +264,7 @@
                     <div class="modal-footer" style="text-align: center">
                         <!-- data-dismiss="modal": cierra la ventana modal -->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar guía</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="crearGuia()">Guardar guía</button>
 
                     </div>
                 </div>
