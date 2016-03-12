@@ -22,8 +22,7 @@
             $idAsignatura  = $_GET['idA'];
             $idGuia = $_GET['idG'];
             $modo = $_GET['modo'];
-
-            
+			
             //$rutProfesor = '15302958-k';
             //$idAsignatura  = 1;
             //$idGuia = 1;
@@ -38,19 +37,28 @@
 				print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
 			}
         ?>
-
+		
         <script>
 
-			function subir_preguntas(modo){
+			function direccionarAGuias(asignatura,rut){
 				
-				//console.log("Modo: "+modo);
-				
+				/*console.log("Asignatura: "+asignatura);
+				console.log("Rut: "+rut);*/
+
+				location.href ="guias.php?id="+asignatura+"&rut="+rut;
+			}
+		
+			function subir_preguntas(asignatura,rut,guia,modo){
+								
+				/*console.log("Asignatura: "+asignatura);
+				console.log("Guia: "+guia);
+				console.log("Modo: "+modo);	*/			
+								
 				var cantidad_preguntas = 28;
 				var preguntas = [];
 				
-				if (modo == 'CREAR' || modo 'EDITAR'){
-						
-					for (i = 1; i <= cantidad_preguntas; i++) {
+									
+					for (i = 1; i <= cantidad_preguntas; i++){
 						
 						var seleccion = document.getElementById("activar:"+i).checked;
 						
@@ -60,31 +68,28 @@
 						}
 					}
 					
-					//TODO : Enviar modo por ajax junto a los ids
-					
 					if(preguntas.length == 0){
 						
 						alert("Seleccione preguntas para crear la guia");
 						
 					}else{
-						
-							alert("Subiendo guia");
 							
-							var jsonString = JSON.stringify(preguntas);
+							var jsonString = JSON.stringify(preguntas); //Pasar el arreglo serializado
+							
 							$.ajax({
 								type: "POST",
-								url: "scripts/subirGuia.php,
-								data: {data : jsonString}, 
+								url: "scripts/subirGuia.php",
+								data: {idGuia: guia, modoGuia : modo,datos : jsonString}, 
 								cache: false,
-
 								success: function(){
 									alert("Guia subida correctamente");
-								}
-								
-								
+									
+									/*volver al listado de asignaturas*/
+									direccionarAGuias(asignatura,rut);
+								},
+								error: function(){alert("Guia subida correctamente");}
 							});
 					}
-				}
             }
             
         </script>
@@ -171,7 +176,7 @@
                 /*Cagar titulo guia*/	
 
                 $stmt = $conn->prepare ("SELECT Titulo, Descripcion FROM Guia WHERE Id =:id");
-                $stmt->bindParam(':id',$id);
+                $stmt->bindParam(':id',$idGuia);
                 $stmt->execute();
                 $row = $stmt->fetch();
 
@@ -323,14 +328,13 @@
                         print "<script> document.getElementById(\"".$salida."\").checked = true; </script>";
                     }	
                 }
+				
+				/*Boton final guia*/
+				
+				botonesGuia($rutProfesor,$idAsignatura,$idGuia,$modo);
 
             ?>
 
-            <div class="form-group">
-                <div class="row text-center">
-                    <button type="button" class="btn btn-info" id="subir-guia" onclick ="subir_preguntas('<?php print $modo;?>')">Subir guía</button>
-                </div>
-            </div>
             </div><!-- END FORM -->
         </div><!-- END CONTAINER -->
         
