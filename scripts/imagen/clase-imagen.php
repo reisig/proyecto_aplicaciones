@@ -9,34 +9,43 @@
 
 class Imagen{
     
-    var $ruta; // ruta desde donde se cargara la imagen
+    var $id; // identificador de la imagen
     var $rut_alumno; // rut del alumno que subio la imagen
+    var $ruta; // ruta desde donde se cargara la imagen
     var $descripcion_breve; // descripcion sobre la imagen subida
     var $tipo_tenido; // teñido utlizado en la muestra de la imagen
     var $preparacion; // define el tipo de preparacion de la muestra de la imagen
+    var $diametro;
     var $aumento; // define el aumento utilizado al tomar 
     var $ruta_dibujo; // ruta desde donde se carga el dibujo asociado a la imagen
     var $fecha; // fecha en que fue subida la imagen al repositorio
     var $ancho; // ancho de la imagen
     var $alto; // alto de la imagen
     
-    function __construct( $ruta, $rut_alumno, $descripcion_breve, $tipo_tenido, $preparacion, $aumento, $ruta_dibujo, $fecha)
+    function __construct( $id, $rut_alumno, $ruta, $descripcion_breve, $tipo_tenido, $preparacion, $diametro, $aumento, $ruta_dibujo, $fecha)
     {
+        $this->id = $id;
         $this->ruta = $ruta;
         $this->rut_alumno = $rut_alumno;
         $this->descripcion_breve = $descripcion_breve;
         $this->tipo_tenido = $tipo_tenido;
         $this->preparacion = $preparacion;
+        $this->diametro = $diametro;
         $this->aumento = $aumento;
         $this->ruta_dibujo = $ruta_dibujo;
         $this->fecha = $fecha;
         $foto = getimagesize( $ruta ); // aqui se obtiene la informacion de la imagen
-        $this->ancho = $foto(0); // se guarda el ancho de la imagen
-        $this->alto = $foto(1); // se guarda el alto de la imagen
+        $this->ancho = $foto[0]; // se guarda el ancho de la imagen
+        $this->alto = $foto[1]; // se guarda el alto de la imagen
     }
     
     
     // Aqui inician las funciones get, que nos permiten retornar el valor correspondiente a cada variable del objeto Imagen
+    function get_id()
+    {
+        return $thiis->id;
+    }
+    
     function get_ruta()
     {
         return $this->ruta;
@@ -60,6 +69,11 @@ class Imagen{
     function get_preparacion()
     {
         return $this->preparacion;
+    }
+    
+    function get_diametro()
+    {
+        return $this->diametro;
     }
     
     function get_aumento()
@@ -90,6 +104,11 @@ class Imagen{
     // fin de las funciones get
     
     // Aqui inician las funciones set, en caso de ser necesario modificar alguna de las variables del objeto Imagen por si solos
+    
+    function set_id( $id )
+    {
+        $this->id = $id;
+    }
     
     function set_ruta( $ruta )
     {
