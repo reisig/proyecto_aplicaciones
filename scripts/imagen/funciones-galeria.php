@@ -611,6 +611,7 @@ function obtener_imagenes_bd()
     
     //pasar los datos a un array
     while( $fila = $stmt->fetch()){
+        /*
         echo $fila['Id'];
         echo $fila['RutAlumno'];
         echo $fila['Ruta'];
@@ -627,7 +628,7 @@ function obtener_imagenes_bd()
         
         echo $ancho;
         echo $alto;
-        
+        */
         $fotosGaleria[] = new Imagen($fila['Id'],$fila['RutAlumno'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
     }
     

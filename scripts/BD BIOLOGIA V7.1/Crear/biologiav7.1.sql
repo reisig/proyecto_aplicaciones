@@ -44,14 +44,14 @@ create table UsuarioAsignatura(
 create table Repositorio(
     Id mediumint not null AUTO_INCREMENT,
     RutAlumno varchar(12) default null,
-	Ruta varchar(50) not null,
+	Ruta varchar(300) not null,
 	DescripcionBreve varchar(600) default null,
 	TipoTenido text default null,
-    Preparacion varchar(20) default null,
+    Preparacion varchar(100) default null,
 	Diametro int(11) default null,
 	Aumento int(11) default null,
     Fecha date default null,
-	RutaDibujo varchar(200) default null,
+	RutaDibujo varchar(300) default null,
 	primary key(Id),
 	foreign key(RutAlumno) references Usuario(Rut) 
 	on delete no action on update no action
