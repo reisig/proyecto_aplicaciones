@@ -188,15 +188,14 @@
         
         if(!$con->query($alterTable.$TablaAsignatura." ADD CONSTRAINT fk_".$TablaAsignatura."_1 FOREIGN KEY 
                                                     (RutProfesorACargo) REFERENCES ".$TablaUsuario. "(Rut) 
-                                                    ON DELETE NO ACTION ON UPDATE NO ACTION")){
+                                                    ON DELETE NO ACTION ON UPDATE CASCADE")){
           echo "alter asignatura\n";
           //echo "0";
         }
         
           
         if(!$con->query($alterTable.$TablaContenido." ADD CONSTRAINT fk_".$TablaContenido."_1 FOREIGN KEY 
-                                                    (IdGuia) REFERENCES ".$TablaGuia."(Id)
-                                                    ON DELETE NO ACTION ON UPDATE NO ACTION")){
+                                                    (IdGuia) REFERENCES ".$TablaGuia."(Id)")){
           echo "alter contenido 1\n";
           //echo "0";
         }
@@ -222,7 +221,8 @@
         }
         
         if(!$con->query($alterTable.$TablaRepositorio. " ADD CONSTRAINT fk_".$TablaRepositorio."_1 FOREIGN KEY
-                                                        (RutAlumno) REFERENCES ".$TablaUsuario."(Rut)")){
+                                                        (RutAlumno) REFERENCES ".$TablaUsuario."(Rut)
+                                                        ON DELETE NO ACTION ON UPDATE CASCADE")){
 
           echo "alter Repositorio\n";
           //echo "0";
@@ -241,7 +241,8 @@
         }
 
         if(!$con->query($alterTable.$TablaRespuesta." ADD CONSTRAINT fk_".$TablaRespuesta."_3 FOREIGN KEY
-                                                      (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)")){
+                                                      (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)
+                                                      ON DELETE NO ACTION ON UPDATE CASCADE")){
           echo "alter respuesta 3\n";
           //echo "0";
         }
@@ -254,7 +255,8 @@
 
 
         if(!$con->query($alterTable.$TablaUsuarioAsignatura. " ADD CONSTRAINT fk_".$TablaUsuarioAsignatura."_1 FOREIGN KEY
-                                                    (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)")){
+                                                    (RutUsuario) REFERENCES ".$TablaUsuario."(Rut)
+                                                    ON DELETE CASCADE ON UPDATE CASCADE")){
           echo "alter usuario asignatura 1\n";
           //echo "0";
         }

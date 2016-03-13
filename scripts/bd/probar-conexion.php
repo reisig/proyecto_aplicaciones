@@ -1,11 +1,9 @@
 <?php
-
 	/*
 	
 		Script para probar la conexion con la base de datos...
 		utilizado en el modulo de instalacion unicamente
-	*/
-	
+	*/	
 	$host = $_POST['host'];
 	$port = $_POST['port'];
 	$dbuser = $_POST['dbuser'];

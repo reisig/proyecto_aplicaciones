@@ -8,6 +8,12 @@
 
     //cargamos las dependencias.
     require_once(__DIR__. '/scripts/cargar.php');
+
+    $tipo = "";
+    if(isset($_SESSION['user'])){
+        $usr = usuarioActual();
+        $tipo = $usr->tipoUsuario;
+    }
  ?>
 
 <!DOCTYPE html>
@@ -58,26 +64,45 @@
                             <!-- RIGHT SECTION -->
                             <div class="navbar-right">
                                 <ul class="nav navbar-nav">
-                                    <li class="active">
-                                        <a href="#">Asignaturas</a>
+                                    <li class ="active">
+                                    <?php
+                                        if($tipo=="Profesor"){
+                                            echo "<a href=\"asignaturas.php\">Asignaturas</a>";
+                                        }else if($tipo=="Administrador"){
+                                            echo "<a href=\"asignaturas.php\">Asignaturas</a>";
+                                            echo "</li><li>";
+                                            echo "<a href=\"ver-usuarios.php\">Profesores</a>";
+                                        }else if($tipo=="Alumno"){
+                                            echo"<li class=\"dropdown\">
+                                                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" data-hover=\"dropdown\">Guías Resueltas<span class=\"caret\"></span></a>
+                                                    <ul class=\"dropdown-menu\">
+                                                        <!-- Listar asignaturas -->
+                                                        <li><a href=\"#\">Asignatura1</a></li>
+                                                        <li><a href=\"#\">Asignatura2</a></li>
+                                                        <li><a href=\"#\">Asignatura3</a></li>
+                                                        <li><a href=\"#\">Asignatura4</a></li>
+                                                        <li><a href=\"#\">Asignatura5</a></li> 
+                                                    </ul>     
+                                                </li>";
+                                        }
+                                    ?>
                                     </li>
+                                    <?php if($tipo==""){
+                                        echo "<li class=\"active\">
+                                                <a href=\"login.php\">Home<span class=\"sr-only\">(current)</span></a>
+                                            </li>";
+                                        }
+                                    ?>
                                     <li>
-                                        <a href="#">Galería</a>
+                                        <a href="galeria.php">Galería</a>
                                     </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Guías Resueltas<span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <!-- Listar asignaturas -->
-                                            <li><a href="#">Asignatura1</a></li>
-                                            <li><a href="#">Asignatura2</a></li>
-                                            <li><a href="#">Asignatura3</a></li>
-                                            <li><a href="#">Asignatura4</a></li>
-                                            <li><a href="#">Asignatura5</a></li> 
-                                        </ul>     
-                                    </li>
-                                    <li class="sign-out">
-                                        <a href="#">Cerrar Sesión <span class="sr-only">(current)</span></a>
-                                    </li>
+                                    <?php
+                                        if($tipo!=""){
+                                        echo "<li class=\"sign-out\">
+                                                <a href=\"logout.php\">Cerrar Sesión<span class=\"sr-only\">(current)</span></a>
+                                            </li>";
+                                        }
+                                    ?>
                                 </ul>
                             </div>
                         </div>

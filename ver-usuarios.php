@@ -1,4 +1,12 @@
+<?php
+  session_start();
+  require_once( __DIR__. '/cabecera.php' );
 
+     if(isset($_POST['agrega-profesor'])){
+      header("Location: agregar-usuarios.php");
+    }
+
+?>
 <!-- Este es un comentario en HTML                                -->
 <!-- DeclaraciÃ³n de tipod e documento                             -->
 <!DOCTYPE html>
@@ -9,6 +17,8 @@
     <title> Ver Usuarios </title>
       <link rel="stylesheet" type="text/css" href="css/estilos2.css">
       <link href="css/bootstrap.min.css" rel="stylesheet">
+      <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+      <script type="text/javascript" src="js/main.js"></script>
     <style>
        p {color:black; width:80%; margin-left:20px;}
     </style>
@@ -17,76 +27,49 @@
 
 <!-- Inicio del encabezado HTML                                   --> 
   <body>
-    <!-- nav -->
-    <nav class="navbar navbar-default">
-
-      <div class="container">
-        <!-- LEFT SECTION -->
-        <div class="navbar-header">
-          <div class="navbar-left">
-            <div class="col-lg-4">
-              <img src="repositorio/ULS-logo.jpg" id="logo-uls">
-            </div>
-            <div class="col-md-8">
-              <h6 class="navbar-brand">Departamento de Biología</h2>
-            </div>
-          </div>
-        </div>
-        <!-- RIGHT SECTION -->
-        <div class="navbar-right">
-          <ul class="nav navbar-nav">
-            <li class="active">
-              <a href="#">Profesores</a>
-            </li>
-            <li>
-              <a href="galeria.php">Galería</a>
-            </li>
-            <li>
-              <a href="guias_resueltas.html">Configuracion</a>
-            </li>
-            <li class="sign-out">
-              <a href="logout.php">Cerrar Sesión <span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    
 
     <div class="container"> 
       <h1> Ver Profesores </h1>
       <form name="ver_profesor" > <!-- action="scripts/agrega.php" method="post" -->
     </div>
         <?php
-          session_start();
 
           if(isset($_SESSION['user'])==""){
             header("Location: index.php");
           }
 
-          require_once __DIR__."/scripts/bd/dbc.php";
           require_once __DIR__."/scripts/bd/consultas.php";
           require_once __DIR__."/scripts/usuario/clase-usuario.php";
 
           $usuarios = consultas::getUsuarios();
-          if($usuarios[0] != ""){
+          if(count($usuarios)!=0){
+              $count = 0;
               foreach($usuarios as $usr){
-                $nombre = $usr['Nombre'];
-                $apellidoP = $usr['ApellidoP'];
-                $apellidoM = $usr['ApellidoM'];
-                $correo = $usr['Correo'];
-                $rut = $usr['Rut'];
-                echo $nombre.'  '.$apellidoP.'  '.$apellidoM.'  '.$correo.'
-                 <a href="asignaturas.php?id='.$rut.'">Asignaturas</a>
-                 <a href="modificar-usuarios.php?id='.$rut.'">Modificar</a> 
-                 <a href="eliminar.php?id='.$rut.'">Eliminar</a></br>'; 
+                if($usr['TipoUsuario']=="profesor"){
+                  $count = $count+1;
+                  $nombre = $usr['Nombre'];
+                  $apellidoP = $usr['ApellidoP'];
+                  $apellidoM = $usr['ApellidoM'];
+                  $correo = $usr['Correo'];
+                  $rut = $usr['Rut'];
+                  echo $nombre.'  '.$apellidoP.'  '.$apellidoM.'  '.$correo.'
+                   <a href="asignaturas.php?id='.$rut.'">Asignaturas</a>
+                   <a href="modificar-usuarios.php?id='.$rut.'">Modificar</a> 
+                   <a href="eliminar.php?id='.$rut.'">Eliminar</a></br>'; 
+                }else{
+                  if ($count==0){
+                    echo "No hay profesores agregados.\n";
+                  }
+                }
             }
           }else{
             echo "No hay usuarios agregados.\n";
           }
         ?>
-        <a style="display: inline-block" id = "btn_profesor" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/agregar-usuarios.php">Agrega Profesor</a> 
-         <a style="display: inline-block" id = "btn_alumno" class="btn btn-lg btn-info btn-block" href="/proyecto_aplicaciones/agregar-usuarios.php">Agrega Alumno</a> 
-      </form>
+
+          <a href="agregar-usuarios.php?tipo=1" style="display:inline-block" class="btn btn-lg btn-info btn-block" >Agrega Profesor</a> 
+           <a href="agregar-usuarios.php?tipo=2" style="display:inline-block" class="btn btn-lg btn-info btn-block"  >Agrega Alumno</a> 
 
        <footer>
             <div class="jumbotron">

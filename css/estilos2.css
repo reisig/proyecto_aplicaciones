@@ -1,9 +1,49 @@
-.container-fluid{
-    width:auto;
-	border:  auto;
-	margin: auto;
- 
+
+body {
+ font-family: 'Open Sans', "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.78571em;
+  color: #1c1c1c;
+  background-color: #ffffff;
+
 }
+ 
+
+
+#contenido-principal {
+height: 365px;
+width: 100%;
+text-align:left;
+}
+ 
+ 
+
+ 
+#container {
+width: 100%;
+
+}
+ 
+
+
+#cabecera > nav {
+  margin: 0;
+  border-radius: 0 !important;
+  border: none;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+
+
+#main{
+  position:absolute;
+  top:80px;    /*La altura de la cabecera*/
+  bottom:40px;      /*Altura del pie de página*/
+
+} 
+
+
+
 
 .form-group{
     vertical-align: middle;
@@ -14,10 +54,6 @@
     display: block; 
     width: auto; 
     height: auto;
-
-}
-
-.form-control{
 
 }
 
@@ -40,7 +76,13 @@
 	height: 24px;
 }
 
-h1{margin:.67em 0;font-size:2em}
+.btn-default{ 
+	color:#333;
+	background-color:#fff;
+	border-color:#ccc 
+	width: 100%;
+	height: 24px;
+}
 
 
 .form-control{

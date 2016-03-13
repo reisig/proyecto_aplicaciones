@@ -15,9 +15,9 @@
     //carga dependencias carpeta BD
 
     /*require_once(__DIR__. '/conexion.php');
-    require_once(__DIR__. '/config.php');
-    require_once(__DIR__. '/consultas.php');
-    require_once(__DIR__. '/dbc.php');
+    require_once(__DIR__. '/config.php');*/
+    require_once(__DIR__. '/bd/consultas.php');
+    /*require_once(__DIR__. '/dbc.php');
     require_once(__DIR__. '/mysql_connection.php');*/
 
     //carga dependencias carpeta INSTALACION
@@ -31,6 +31,10 @@
     //require_once(__DIR__. '/listadoGuias.php');
 
     //carga dependencias carpeta USUARIO
+
+    require_once __DIR__."/usuario/clase-usuario.php";
+    require_once __DIR__."/usuario/funciones-usuario.php";
+
 
     //require_once(__DIR__. '/administrador.php');
     //require_once(__DIR__. '/alumno.php');

@@ -6,7 +6,6 @@
 	class consultas {
 		private static $_db; 
 
-
 		public static function insertUsuario($rut, $nombre, $apellidoP, $apellidoM, $correo, $password, $tipoUsuario){
 			$_db = dbc::instance();
 			$stmt = $_db->prepare("INSERT INTO ".USUARIO." (Rut, Nombre, ApellidoP, ApellidoM, Correo, TipoUsuario, Password ) VALUES (:rut, :nombre, :apellidoP, :apellidoM, :correo, :tipo, :password) ");
@@ -57,7 +56,7 @@
 
 		public static function getUsuarios(){
 			$_db = dbc::instance();
-			$stmt = $_db->prepare("SELECT Nombre, ApellidoP, ApellidoM, Correo, Rut FROM ".USUARIO." WHERE TipoUsuario <> 'administrador'");
+			$stmt = $_db->prepare("SELECT Nombre, ApellidoP, ApellidoM, Correo, Rut, TipoUsuario FROM ".USUARIO." WHERE TipoUsuario <> 'administrador'");
 	      	$stmt->execute();
 	      	$salida = array();
 	      	while($row = $stmt->fetch()){
@@ -92,12 +91,12 @@
 	      	return $salida;
 		}
 
-		//modificar el usuario cuando tiene el mismo rut
-		public static function modificarUsuario($nombre, $apellidoP, $apellidoM, $rut, $correo, $password){
+
+		public static function modificarUsuario($nombre, $apellidoP, $apellidoM, $rut, $n_rut, $correo, $password){
 			$_db = dbc::instance();
 			$stmt = $_db->prepare("UPDATE ".USUARIO." SET Nombre = :nombre, 
 														ApellidoP = :apellidoP,
-														Rut = :rut,
+														Rut = :nrut,
 														Correo = :correo,
 														Password = :password WHERE Rut = :rut");
 			$stmt->bindParam(':nombre', $nombre);
@@ -106,6 +105,7 @@
 			$stmt->bindParam(':correo', $correo);
 			$stmt->bindParam(':password', $password);
 			$stmt->bindParam(':rut', $rut);
+			$stmt->bindParam(':nrut', $n_rut);
 
 			return $stmt->execute();
 		}
@@ -115,10 +115,10 @@
 			$stmt = $_db->prepare("SELECT nombre FROM ".USUARIO." WHERE Rut = :rut");
 			$stmt->bindParam(':rut', $rut);
 			$stmt->execute();
-			if(count($stmt->fetch()) == 0){
-				return false;
+			if($stmt->fetch()){
+				return true;
 			}
-			return true;
+			return false;
 		}
 
 		public static function eliminarProfesor($rut){

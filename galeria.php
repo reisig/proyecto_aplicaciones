@@ -8,6 +8,7 @@
 
 /*Gran parte del codigo de este archivo no es el codigo final, solo se hizo para
   probar la pagina. */
+session_start();
 
 require_once( __DIR__. '/cabecera.php' );
 

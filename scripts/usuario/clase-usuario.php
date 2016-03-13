@@ -68,7 +68,8 @@
 		}
 
 		public static function getInstance(){
-     		if (!is_null(self::$instance)) return self::$instance;
+     		if (!is_null(self::$instance)) 
+     			return self::$instance;
      		self::$instance = new self;
      		return self::$instance;
    		}
