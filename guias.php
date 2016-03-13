@@ -7,19 +7,15 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head
         content must come *after* these tags -->
         <title>Listado Guias</title>
+        
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/guia.css" rel="stylesheet">
 		
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!--<script src="js/jquery-1.12.0.min.js"></script>-->
         <script src="js/bootstrap.min.js"></script>
-		
-        <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();   
-            });
-        </script>
-		
+        
 		<?php
 		
 			/*Datos de conexion*/
@@ -33,6 +29,15 @@
         
             //print "<h3>Rut: ".$rutProfesor."</h3>";
             //print "<h3>Asignatura: ".$idAsignatura."</h3>";
+        
+            /*Recuperar datos del profesor*/
+
+            $stmt = $conn->prepare ("SELECT Nombre, ApellidoP FROM Usuario WHERE Rut=:rut");
+            $stmt->bindParam(':rut',$rutProfesor);
+            $stmt->execute();
+            $row = $stmt->fetch();
+
+            $profesor = $row['Nombre']." ".$row['ApellidoP'];
 
 
 			function cargarGuias($rutProfesor,$idAsignatura,$idGuia,$titulo,$descripcion,$fecha,$usuario){
@@ -72,19 +77,85 @@
             function menuAsignatura($idAsignatura, $nombreAsignatura){
                 print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$nombreAsignatura."</a></li>";
             }
+        
 		?>
-		
-		<script>
-		
-		
-		
-		
-		</script>
+   
+        <script>
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+
+            $(document).ready(function(){
+				
+                $(":checkbox").click(function(){
+					
+                    var idAsignatura = <?php print $idAsignatura; ?>;
+					
+					var idGuiaCompleto = $(this).attr('id');
+					var res = idGuiaCompleto.split(":"); 
+					var idGuia = res[1];
+					
+                    var seleccion = document.getElementById(idGuiaCompleto).checked;
+                    
+                    alert("Asignatura: "+idAsignatura);
+                    alert("Guia: "+idGuia);
+                    alert("Seleccion: "+seleccion);
+                    
+					$.ajax({
+						type: "POST",
+						url: "scripts/cambiarEstado.php",
+						data:  { idG : idGuia, idA : idAsignatura, selCheckbox : seleccion },
+						cache: false,
+
+						success: function(response){
+							if(response == 1){
+								alert("cambio el estado a ACTIVA");
+							}else{
+								alert("cambio el estado a INACTIVA");
+							}
+						}
+					});
+                });    
+            });    
+            
+            function direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo){
+                
+				/*console.log("Rut: "+rutProfesor);
+				console.log("Asignatura: "+idAsignatura);
+				console.log("Guia: "+idGuia);
+				console.log("modo: "+modo);*/
+				
+                location.href="guia.php?rut="+rutProfesor+"&idA="+idAsignatura+"&idG="+idGuia+"&modo="+modo;
+            }
+            
+            function crearGuia(){
+                
+                var modo = "CREAR";
+                var estado = "INACTIVA";
+                var idAsignatura = <?php print $idAsignatura; ?>;    
+                var tituloGuia = document.getElementById("titulo-guia-nueva").value;
+                var descripcion = document.getElementById("descripcion-guia-nueva").value; 
+                var rutProfesor = <?php print '"'.$rutProfesor.'"'; ?>;           
+                
+                $.ajax({
+                    type: "POST",
+                    url: "scripts/crearGuia.php",
+                    data: { idAsig : idAsignatura, titulo: tituloGuia, descripcionGuia : descripcion, estadoGuia : estado }, 
+                    cache: false,
+
+                    success: function(respuesta){
+                        var idGuia = respuesta; 
+                        //alert(idGuia);
+                        direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo);
+                    }
+                });
+            }
+            
+        </script>
     </head>
     
     <body>
         <?php
-
 
             /*Recuperar listado de asignaturas*/
             $stmt = $conn->prepare("SELECT Id, NombreAsignatura FROM Asignatura WHERE RutProfesorACargo=:rut");
@@ -98,7 +169,6 @@
                 array_push($idAsignaturas, $row['Id']);
                 array_push($asignaturas, $row['NombreAsignatura']);
             } 
-
         ?>       
        
         <!-- nav -->
@@ -126,9 +196,9 @@
 
                                 <!-- Listar asignaturas -->
                                 <?php 
-                                for($i=0; $i<count($asignaturas);$i++){
-                                    menuAsignatura($idAsignaturas[$i], $asignaturas[$i]);
-                                }
+                                    for($i=0; $i<count($asignaturas);$i++){
+                                        menuAsignatura($idAsignaturas[$i], $asignaturas[$i]);
+                                    }
                                 ?>
 
                             </ul>     
@@ -193,9 +263,8 @@
 					$id = $row['Id'];
 					$titulo = $row['Titulo'];
 					$descripcion = $row['Descripcion'];
-					$fecha = $row['Fecha'];
 					$estado = $row['Estado'];
-	
+					
 					/*print "<br><br><br>";  
 					print "GUIA <br><br>";
 					print $id."<br>";
@@ -203,10 +272,36 @@
 					print $descripcion."<br>";
 					print $fecha."<br>";
 					print $estado."<br>";*/
-	
+									
+					/*Transformacion de fecha USA a fecha CL*/
+					
+					$fechaUsa = date_parse($row['Fecha']);
+					
+					if ($fechaUsa['day'] < 10){
+						
+						$fechaUsa['day'] = "0".$fechaUsa['day'];
+					}
+					
+					if($fechaUsa['month'] < 10){
+						
+						$fechaUsa['month'] = "0".$fechaUsa['month'];
+					}
+					
+					$fecha = $fechaUsa['day']."/".$fechaUsa['month']."/".$fechaUsa['year'];
+					
 					/*Cargar preguntas en la pagina*/
 					
 					cargarGuias($rutProfesor,$idAsignatura,$id,$titulo,$descripcion,$fecha,$nombre);
+					
+                    /*Activar guias habilitadas*/
+					
+					$salida = "habilitarGuia:".$id;
+					
+					if ($estado == 'ACTIVA'){
+						print "<script> document.getElementById(\"".$salida."\").checked = true; </script>";
+					}else{
+						print "<script> document.getElementById(\"".$salida."\").checked = false; </script>";
+					}
 				}
 			?>
 		
@@ -226,11 +321,11 @@
                         <form>
                             <div class="form-group">
                                 <label class="control-label">Titulo:</label>
-                                <input type="text" class="form-control" id="recipient-name" placeholder="Ingrese título de la guía">
+                                <input type="text" class="form-control" id="titulo-guia-nueva" placeholder="Ingrese título de la guía" required>
                             </div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">Descripción:</label>
-                                <textarea class="form-control" id="message-text" placeholder="Ingrese descripción de la guía"></textarea>
+                                <textarea class="form-control" id="descripcion-guia-nueva" placeholder="Ingrese descripción de la guía" required></textarea>
                             </div>
                         </form>
                     </div>
@@ -238,7 +333,7 @@
                     <div class="modal-footer" style="text-align: center">
                         <!-- data-dismiss="modal": cierra la ventana modal -->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar guía</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="crearGuia()">Guardar guía</button>
 
                     </div>
                 </div>

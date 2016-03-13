@@ -16,8 +16,9 @@ require_once( __DIR__. '/cabecera.php' );
 
 		<?php $offset = obtener_offset(); ?>
 		
-		<?php $imagenes = obtener_imagenes($_GET, 14, $offset-1); ?>
-
+		<?php //$imagenes = obtener_imagenes($_GET, 14, $offset-1); ?>
+        <?php $imagenes = obtener_imagenes( obtener_imagenes_bd(), 14, $offset-1); ?>
+            
 		<?php 
 		//global $usuario;
 
@@ -29,9 +30,11 @@ require_once( __DIR__. '/cabecera.php' );
 
 				<div id="contenedorComparacion" class="contenedor-comparacion">
 
-					<div class="cr-fotografia col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Fotografia" id="fotografia" class="img-responsive" /></div>
-					<div class="cr-dibujo col-sm-6"><img src="repositorio/<?php echo (!empty($imagen_defecto) ? $imagenes[0] : ''); ?>" alt="Dibujo fotografia" id="dibujo" class="img-responsive" /></div>
+					<div class="cr-fotografia col-sm-6"><img src="<?php echo (!empty($imagen_defecto) ? $imagenes->get_ruta() : ''); ?>" alt="Fotografia" id="fotografia" class="img-responsive" /></div>
+					<div class="cr-dibujo col-sm-6"><img src="<?php echo (!empty($imagen_defecto) ? $imagenes->get_ruta_dibujo() : ''); ?>" alt="Dibujo fotografia" id="dibujo" class="img-responsive" /></div>
+
 				</div>
+
 			</div>
 
 		<?php //endif; ?>

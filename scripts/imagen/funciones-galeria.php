@@ -174,24 +174,25 @@ function obtener_imagenes_galeria( $imagenes ) {
 	$html = '<div class="imagenes grid" itemscope itemtype="http://schema.org/ImageGallery">';
 
 		foreach ($imagenes as $imagen) {
-			$info_imagen = getimagesize('repositorio/'. $imagen);
+			//$info_imagen = getimagesize('repositorio/'. $imagen);
 
-			$html .= '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-md-3" data-dibujo="repositorio/'. $imagen. '">';
+//            $html .= '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-md-3" data-dibujo="repositorio/'. $imagen->getRuta. '">';
+            $html .= '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="grid-item col-md-3" data-dibujo='. $imagen->get_ruta_dibujo(). '>';
 
-				$html .= '<a href="repositorio/'. $imagen. '" itemprop="contentUrl" data-size="'. $info_imagen[0]. 'x'. $info_imagen[1]. '">';
+				$html .= '<a href="'. $imagen->get_ruta(). '" itemprop="contentUrl" data-size="'. $imagen->get_ancho(). 'x'. $imagen->get_alto(). '">';
 
-					$html .= '<img src="repositorio/'. $imagen. '" itemprop="thumbnail" alt="Image description" />';
+					$html .= '<img src="'. $imagen->get_ruta(). '" itemprop="thumbnail" alt="Image description" />';
 
 				$html .= '</a>';
 
 				$html .= '<figcaption class="detalles" itemprop="caption description">';
 
-					$html .= '<div class="detalle"><strong>Preparacion de: </strong><span>Epidermis inferior de hoja</span></div>';
-					$html .= '<div class="detalle"><strong>Tinción usada: </strong><span>Hematoxilina-eosina</span></div>';
-					$html .= '<div class="detalle"><strong>Diámetro del campo: </strong><span>1500 µ</span></div>';
-					$html .= '<div class="detalle"><strong>Aumento total: </strong><span>100x</span></div>';
-					$html .= '<div class="detalle"><strong>Autor: </strong><span>Juan Perez</span></div>';
-					$html .= '<div class="detalle"><strong>Fecha: </strong><span>20/01/2016</span></div>';
+					$html .= '<div class="detalle"><strong>Preparacion de: </strong><span>'.$imagen->get_preparacion().'</span></div>';
+					$html .= '<div class="detalle"><strong>Tinción usada: </strong><span>'.$imagen->get_tenido().'</span></div>';
+					$html .= '<div class="detalle"><strong>Diámetro del campo: </strong><span>'.$imagen->get_diametro().'µ</span></div>';
+					$html .= '<div class="detalle"><strong>Aumento total: </strong><span>'.$imagen->get_aumento().'x</span></div>';
+					$html .= '<div class="detalle"><strong>Autor: </strong><span>'.$imagen->get_rut().'</span></div>';
+					$html .= '<div class="detalle"><strong>Fecha: </strong><span>'.$imagen->get_fecha().'</span></div>';
 
 				$html .= '</figcaption>';
 
@@ -321,7 +322,6 @@ function obtener_filtros() {
 				'Tinción argéntica',
 				'Azul de metileno',
 				'Lugol',
-				'Tinción argéntica',
 				'Orceína',
 				'Sin tinción',
 			),
@@ -333,6 +333,7 @@ function obtener_filtros() {
 				'100x',
 				'400x',
 				'1000x',
+                'Sin diametro',
 			),
 		),
 		'aumento_total' => array(
@@ -343,6 +344,7 @@ function obtener_filtros() {
 				'375 µ',
 				'150 µ',
 				'Otro',
+                'Sin aumento',
 			),
 		),
 	);
@@ -559,7 +561,12 @@ function obtener_total_imagenes() {
  * @param int #offset Numero de partida.
  * @return array
  */
+/*
 function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
+    //echo "<pre>";
+        //printr_r($filtros);    
+    //echo "</pre>";
+        
 	global $imagenes_prueba;
 
 	$resultado = array();
@@ -576,4 +583,79 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
 	}
 
 	return $resultado;
+}*/
+
+/**
+ * Devuelve el array con los objetos Imagen a mostrar en la galeria 
+ 
+ * @return array
+*/
+
+function obtener_imagenes_bd()
+{
+    //crear la conexion
+    $usuario_bd = 'root';
+    $passwd_bd = '1234';
+    try {
+    //	print "Conectando";
+        $conn = new PDO('mysql:host=localhost;dbname=biologia;charset=utf8', $usuario_bd, $passwd_bd);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        print "¡Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+    
+    //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
+    $stmt = $conn->prepare("SELECT Id,RutAlumno,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC");
+    $stmt->execute();
+    
+    //pasar los datos a un array
+    while( $fila = $stmt->fetch()){
+        /*
+        echo $fila['Id'];
+        echo $fila['RutAlumno'];
+        echo $fila['Ruta'];
+        echo $fila['DescripcionBreve'];
+        echo $fila['Preparacion'];
+        echo $fila['Diametro'];
+        echo $fila['Aumento'];
+        echo $fila['FechaFormato'];
+        echo $fila['RutaDibujo'];
+        
+        $foto = getimagesize( $fila['Ruta'] );
+        $ancho = $foto[0]; // se guarda el ancho de la imagen
+        $alto = $foto[1]; // se guarda el alto de la imagen 
+        
+        echo $ancho;
+        echo $alto;
+        */
+        $fotosGaleria[] = new Imagen($fila['Id'],$fila['RutAlumno'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
+    }
+    
+    // retornar el array con las imagenes
+    return $fotosGaleria;
 }
+
+function obtener_imagenes( $imagenes, $numero, $offset = 0 ) {
+    //echo "<pre>";
+        //printr_r($filtros);    
+    //echo "</pre>";
+        
+    $imagenes_prueba = $imagenes;
+
+	$resultado = array();
+
+	if( $offset > 0 ) {
+		$offset *= $numero;
+		$numero += $offset;
+	} else if( $offset < 0 ) {
+		$offset = 0;
+	}
+
+	for ($i=$offset; $i < $numero; $i++) { 
+		$resultado[] = $imagenes_prueba[$i];
+	}
+
+	return $resultado;
+}
+
