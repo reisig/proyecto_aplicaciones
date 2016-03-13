@@ -24,6 +24,39 @@
         print 		"</div>";
 	}
 	
+	/*Botones para la guia, dependiendo del modo de visualizacion*/
+	
+	function botonesGuia($rut,$idAsignatura,$idGuia,$modo){
+
+		if($modo == 'VER'){
+			
+			print   "<div class=\"form-group\">";
+			print		"<div class=\"row text-center\">";
+            print         "<button type=\"button\" class=\"btn btn-info\" id=\"ver-guia\" onclick =\"volver('".$idAsignatura."','".$rut."')\">Volver</button>";
+			print 		"</div>";
+			print 	"</div>";
+		}
+	
+		if($modo == 'CREAR' || $modo == 'EDITAR'){
+			
+			print   "<div class=\"form-group\">";
+			print		"<div class=\"row text-center\">";
+            print         "<button type=\"button\" class=\"btn btn-info\" id=\"subir-guia\" onclick =\"subir_preguntas('".$idAsignatura."','".$rut."','".$idGuia."','".$modo."')\">Subir guía</button>";
+			print 		"</div>";
+			print 	"</div>";
+		}
+		
+		if($modo == 'RESOLVER'){
+			
+			print   "<div class=\"form-group\">";
+			print		"<div class=\"row text-center\">";
+            print         "<button type=\"button\" class=\"btn btn-info\" id=\"resolver-guia\" onclick =\"subir_respuestas('".$idAsignatura."','".$rut."','".$idGuia."','".$modo."')\">Enviar</button>";
+			print 		"</div>";
+			print 	"</div>";		
+		}
+	
+	} 
+	
 	/*Tipos de preguntas*/
 	
     function dibujo($id_pregunta,$modo){   
@@ -44,10 +77,12 @@
     } 
      
     function foto($id_pregunta,$modo){
-
+        
+        print "<fieldset class=\"scheduler-border\">";
+        print "<legend class=\"scheduler-border\"> Subir foto </legend>";
         print "<div class=\"form-group foto\" id=\"".$id_pregunta."\">";
         print    "<div class=\"form-group\">";
-        print        "<label class=\"control-label\">Subir foto:";
+        print        "<label class=\"control-label\">Elegir imagen:";
         print          "<input id=\"foto\" class=\"file\" type=\"file\" name=\"foto\">";
         print        "</label>";
         print      "</div>";
@@ -96,13 +131,14 @@
         print       "</div>";
         print     "<br>";
         print     "</div>";
+        
 
 		if ($modo == 'CREAR' || $modo == 'EDITAR'){
 				activar($id_pregunta);	
 		}
 			
         print "</div>";
-		print "<hr>";
+        print "</fieldset>";
     }
 
     function titulo($id_pregunta,$texto_titulo,$modo){
@@ -204,9 +240,9 @@
 
 			print "<div class=\"radio\">";
 			if($i==0)
-			   print "<label><input type=\"radio\" name=\"opciones\" id=\"opciones".$i."\" checked=\"\">".$opciones[$i]."</label>"; 
+			   print "<label><input type=\"radio\" name=\"opciones".$id_pregunta."\" id=\"opciones".$i."\" checked=\"\">".$opciones[$i]."</label>"; 
 			else
-			  print "<label><input type=\"radio\" name=\"opciones\" id=\"opciones".$i."\">".$opciones[$i]."</label>";  
+			  print "<label><input type=\"radio\" name=\"opciones".$id_pregunta."\" id=\"opciones".$i."\">".$opciones[$i]."</label>";  
 			
 			print "</div>";
 		}

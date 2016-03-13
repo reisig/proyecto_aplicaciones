@@ -15,7 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!--<script src="js/jquery-1.12.0.min.js"></script>-->
         <script src="js/bootstrap.min.js"></script>
-		
+        
 		<?php
 		
 			/*Datos de conexion*/
@@ -29,6 +29,15 @@
         
             //print "<h3>Rut: ".$rutProfesor."</h3>";
             //print "<h3>Asignatura: ".$idAsignatura."</h3>";
+        
+            /*Recuperar datos del profesor*/
+
+            $stmt = $conn->prepare ("SELECT Nombre, ApellidoP FROM Usuario WHERE Rut=:rut");
+            $stmt->bindParam(':rut',$rutProfesor);
+            $stmt->execute();
+            $row = $stmt->fetch();
+
+            $profesor = $row['Nombre']." ".$row['ApellidoP'];
 
 
 			function cargarGuias($rutProfesor,$idAsignatura,$idGuia,$titulo,$descripcion,$fecha,$usuario){
@@ -68,15 +77,49 @@
             function menuAsignatura($idAsignatura, $nombreAsignatura){
                 print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$nombreAsignatura."</a></li>";
             }
+        
 		?>
    
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('[data-toggle="tooltip"]').tooltip();   
             });
 
-            function direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo){
+            $(document).ready(function(){
 				
+                $(":checkbox").click(function(){
+					
+                    var idAsignatura = <?php print $idAsignatura; ?>;
+					
+					var idGuiaCompleto = $(this).attr('id');
+					var res = idGuiaCompleto.split(":"); 
+					var idGuia = res[1];
+					
+                    var seleccion = document.getElementById(idGuiaCompleto).checked;
+                    
+                    alert("Asignatura: "+idAsignatura);
+                    alert("Guia: "+idGuia);
+                    alert("Seleccion: "+seleccion);
+                    
+					$.ajax({
+						type: "POST",
+						url: "scripts/cambiarEstado.php",
+						data:  { idG : idGuia, idA : idAsignatura, selCheckbox : seleccion },
+						cache: false,
+
+						success: function(response){
+							if(response == 1){
+								alert("cambio el estado a ACTIVA");
+							}else{
+								alert("cambio el estado a INACTIVA");
+							}
+						}
+					});
+                });    
+            });    
+            
+            function direccionarAGuia(rutProfesor,idAsignatura,idGuia,modo){
+                
 				/*console.log("Rut: "+rutProfesor);
 				console.log("Asignatura: "+idAsignatura);
 				console.log("Guia: "+idGuia);
@@ -86,7 +129,7 @@
             }
             
             function crearGuia(){
-
+                
                 var modo = "CREAR";
                 var estado = "INACTIVA";
                 var idAsignatura = <?php print $idAsignatura; ?>;    
@@ -107,6 +150,7 @@
                     }
                 });
             }
+            
         </script>
     </head>
     
@@ -152,9 +196,9 @@
 
                                 <!-- Listar asignaturas -->
                                 <?php 
-                                for($i=0; $i<count($asignaturas);$i++){
-                                    menuAsignatura($idAsignaturas[$i], $asignaturas[$i]);
-                                }
+                                    for($i=0; $i<count($asignaturas);$i++){
+                                        menuAsignatura($idAsignaturas[$i], $asignaturas[$i]);
+                                    }
                                 ?>
 
                             </ul>     
@@ -219,9 +263,8 @@
 					$id = $row['Id'];
 					$titulo = $row['Titulo'];
 					$descripcion = $row['Descripcion'];
-					$fecha = $row['Fecha'];
 					$estado = $row['Estado'];
-	
+					
 					/*print "<br><br><br>";  
 					print "GUIA <br><br>";
 					print $id."<br>";
@@ -229,10 +272,36 @@
 					print $descripcion."<br>";
 					print $fecha."<br>";
 					print $estado."<br>";*/
-	
+									
+					/*Transformacion de fecha USA a fecha CL*/
+					
+					$fechaUsa = date_parse($row['Fecha']);
+					
+					if ($fechaUsa['day'] < 10){
+						
+						$fechaUsa['day'] = "0".$fechaUsa['day'];
+					}
+					
+					if($fechaUsa['month'] < 10){
+						
+						$fechaUsa['month'] = "0".$fechaUsa['month'];
+					}
+					
+					$fecha = $fechaUsa['day']."/".$fechaUsa['month']."/".$fechaUsa['year'];
+					
 					/*Cargar preguntas en la pagina*/
 					
 					cargarGuias($rutProfesor,$idAsignatura,$id,$titulo,$descripcion,$fecha,$nombre);
+					
+                    /*Activar guias habilitadas*/
+					
+					$salida = "habilitarGuia:".$id;
+					
+					if ($estado == 'ACTIVA'){
+						print "<script> document.getElementById(\"".$salida."\").checked = true; </script>";
+					}else{
+						print "<script> document.getElementById(\"".$salida."\").checked = false; </script>";
+					}
 				}
 			?>
 		
