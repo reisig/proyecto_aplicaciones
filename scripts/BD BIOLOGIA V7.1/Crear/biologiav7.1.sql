@@ -43,7 +43,7 @@ create table UsuarioAsignatura(
 			
 create table Repositorio(
     Id mediumint not null AUTO_INCREMENT,
-    RutAlumno varchar(12) default null,
+    Autor varchar(100) not null,
 	Ruta varchar(300) not null,
 	DescripcionBreve varchar(600) default null,
 	TipoTenido text default null,
@@ -53,8 +53,6 @@ create table Repositorio(
     Fecha date default null,
 	RutaDibujo varchar(300) default null,
 	primary key(Id),
-	foreign key(RutAlumno) references Usuario(Rut) 
-	on delete no action on update no action
 );
 
 /*preguntas.tipo_respuesta: TITULO, TEXTO, AREA, MULTIPLE*/
