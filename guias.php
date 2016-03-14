@@ -15,7 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <!--<script src="js/jquery-1.12.0.min.js"></script>-->
         <script src="js/bootstrap.min.js"></script>
-        
+		
 		<?php
 		
 			/*Datos de conexion*/
@@ -66,7 +66,7 @@
                 print     				"<a href=\"guia.php?rut=".$rutProfesor."&idA=".$idAsignatura."&idG=".$idGuia."&modo=EDITAR\" id=\"editarGuia:".$idGuia."\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Editar guía\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
                 print    			"</div>";
 				print    			"<div class=\"col-xs-1\">";
-                print     				"<a href=\"#\" id=\"eliminarGuia:".$idGuia."\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"Eliminar guía\"><span class=\"glyphicon glyphicon-trash\"></span></a>";
+                print     				"<a href=\"guia.php?rut=".$rutProfesor."&idA=".$idAsignatura."&idG=".$idGuia."&modo=RESOLVER\" id=\"eliminarGuia:".$idGuia."\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"Eliminar guía\"><span class=\"glyphicon glyphicon-trash\"></span></a>";
 				print    			"</div>";
 				print			"</div>";
 				print		"</div>";

@@ -184,8 +184,8 @@
             ?>	
         </div>
         <div class="container" id="tipo_preguntas">
-          <div class="form" role="form">
-
+		 <form action="scripts/enviarRespuestas.php" method="post" autocomplete="on">
+		 
             <?php
 
                 /*Arreglos para guardar las variables*/
@@ -334,8 +334,8 @@
 				botonesGuia($rutProfesor,$idAsignatura,$idGuia,$modo);
 
             ?>
-
-            </div><!-- END FORM -->
+			
+		  </form>	
         </div><!-- END CONTAINER -->
         
         <!-- PIE DE PAGINA -->
