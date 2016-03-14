@@ -21,7 +21,7 @@
 
     /*Crear la nueva guia*/
 	
-    $stmt = $conn->prepare("INSERT INTO Guia values (:idGuia, :titulo,:descripcion,:fecha,:idAsignatura,:estado)");
+    $stmt = $conn->prepare("INSERT INTO Guia values (:idGuia,:titulo,:descripcion,:fecha,:idAsignatura,:estado)");
     $stmt->bindParam(':idGuia',$idGuia);
     $stmt->bindParam(':titulo', $tituloGuia);
     $stmt->bindParam(':descripcion', $descripcionGuia);
