@@ -184,7 +184,7 @@
             ?>	
         </div>
         <div class="container" id="tipo_preguntas">
-		 <form action="scripts/enviarRespuestas.php" method="post" autocomplete="on">
+		 <form action="scripts/enviarRespuestas.php" method="post" autocomplete="on" enctype="multipart/form-data">
 		 
             <?php
 
@@ -328,6 +328,11 @@
                         print "<script> document.getElementById(\"".$salida."\").checked = true; </script>";
                     }	
                 }
+				
+				if ($modo == 'RESOLVER'){
+					
+					infoGuia($rutProfesor,$idAsignatura,$idGuia);
+				}
 				
 				/*Boton final guia*/
 				

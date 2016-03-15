@@ -5,23 +5,38 @@
 	
 	/*datos necesarios*/
 	
-	$idAsignatura = $_POST['idAsignatura'];
+	$idAsignatura = $_POST['asigantura'];
+	$idGuia = $_POST['guia'];
+	$rut = $_POST['rut'];
+	
+	if($idAsignatura){
+		
+		echo "<br>SI ESTA EL ID ASIGNATURA: ".$idAsignatura."<br>";
+	}
+	
+	if($idGuia){
+		
+		echo "<br>SI ESTA EL ID GUIA: ".$idGuia."<br>";
+	}
+	
+	if($rut){
+		
+		echo "<br>SI ESTA EL RUT: ".$rut."<br>";
+	}
 	
 	function subirSimple($idAsignatura,$idPregunta,$tipo){
 		
 		/*crear el nombre del arreglo*/
 		
-		$nombreArreglo = $tipo."-".$idPregunta;
-		$arreglo = $_POST[$nombreArreglo];
+		$arreglo = $_POST[$tipo];
 		
 		//echo "<br> Entrando a subirSimple con el tipo: ".$tipo."<br>";
-		//echo "<br> El nombre del arreglo es: ".$nombreArreglo."<br>";
-		
+
 		/*comprobamos si existe*/
 		
 		if(isset($arreglo)){
 			
-			$respuesta = $arreglo['respuesta'];
+			$respuesta = $arreglo[$idPregunta];
 			//print "<br> ID PREGUNTA: ".$idPregunta." RESPUESTA: ".$respuesta."<br>";	
 		}
 		
@@ -35,12 +50,14 @@
 		$nombreArreglo = $tipo."-".$idPregunta;
 		$arreglo = $_POST[$nombreArreglo];
 		
-		//echo "<br> Entrando a subirSimple con el tipo: ".$tipo."<br>";
+		//echo "<br> Entrando a subirCheckbox con el tipo: ".$tipo."<br>";
 		//echo "<br> El nombre del arreglo es: ".$nombreArreglo."<br>";
 		
 		/*comprobamos si existe*/
 		
 		if(isset($arreglo)){
+			
+			//print "<br> ID PREGUNTA: ".$idPregunta."<br>";
 			
 			for($i=0;$i<count($arreglo);$i++){
 					
@@ -48,7 +65,7 @@
 			} 	
 		}
 		
-		echo "<br><hr>";
+		//echo "<br><hr>";
 	}
 	
 	function subirFoto($idAsignatura,$idPregunta,$tipo){
@@ -57,16 +74,23 @@
 		
 		$nombreArreglo = $tipo."-".$idPregunta;
 		$arreglo = $_POST[$nombreArreglo];
+		$foto = $_FILES[$nombreArreglo]['name'];
 		
-		echo "<br> Entrando a subirSimple con el tipo: ".$tipo."<br>";
-		echo "<br> El nombre del arreglo es: ".$nombreArreglo."<br>";
+		//echo "<br> Entrando a subirFoto con el tipo: ".$tipo."<br>";
+		//echo "<br> El nombre del arreglo es: ".$nombreArreglo."<br>";
 		
 		/*comprobamos si existe*/
 		
 		if(isset($arreglo)){
 			
-			$respuesta = $arreglo['respuesta'];
-			print "<br> ID PREGUNTA: ".$idPregunta." RESPUESTA: ".$respuesta."<br>";	
+			print "<br> ID PREGUNTA: ".$idPregunta."<br>";
+			print "FOTO: ".$foto."<br>";
+			print "PREPARACION: ".$arreglo['preparacion']."<br>";	
+			print "TINTE: ".$arreglo['tinte']."<br>";
+			print "DIAMETRO: ".$arreglo['diamentro']."<br>";
+			print "AUMENTO: ".$arreglo['aumento']."<br>";
+			print "AUTOR: ".$arreglo['autor']."<br>";
+			print "DESCRIPCION: ".$arreglo['descripcion']."<br>";
 		}
 		
 		echo "<br><hr>";
@@ -74,10 +98,43 @@
 	
 	function subirDibujo($idAsignatura,$idPregunta,$tipo){
 		
+		/*crear el nombre del arreglo*/
+		
+		$nombreArreglo = $tipo."-".$idPregunta;
+		$arreglo = $_FILES[$nombreArreglo];
+		
+		//echo "<br> Entrando a subirDibujo con el tipo: ".$tipo."<br>";
+		//echo "<br> El nombre del arreglo es: ".$nombreArreglo."<br>";
+		
+		/*comprobamos si existe*/
+		
+		if(isset($arreglo)){
+			
+			$respuesta = $arreglo['name'];
+			//print "<br> ID PREGUNTA: ".$idPregunta." DIBUJO: ".$respuesta."<br>";	
+		}
+		
+		//echo "<br><hr>";
 		
 	}
 	
 	function subirBDSimple(){
+		 
+		$stmt = $conn->prepare("INSERT into Respuesta VALUES (:idP,:idG,:resp,:fecha,:rut)");
+		$stmt->bindParam(":idP", $idGuia);
+		$stmt->bindParam(":idG", $idGuia);
+		$stmt->bindParam(":resp", $idGuia);
+		$stmt->bindParam(":fecha", $idGuia);
+		$stmt->bindParam(":rut", $idGuia);
+		$stmt->execute();
+		
+	}
+	
+	function subirBDFoto(){
+		//obtener la fecha con php
+	}
+	
+	function subirBDDibujo(){
 		
 		
 	}
@@ -94,9 +151,9 @@
 			
 			switch($valor){
 
-				case 'TITULO':	  /*NO HACER NADA: NO HAY VALOR*/		   break;
-				case 'FOTO':											   break;
-				case 'DIBUJO':											   break;
+				case 'TITULO':	  /*NO HACER NADA: NO HAY VALOR*/		   	 break;
+				case 'FOTO':	subirFoto($idAsignatura,$clave,$valor);  	 break;
+				case 'DIBUJO':	 subirDibujo($idAsignatura,$clave,$valor);	 break;
 				case 'CHECKBOX': subirCheckbox($idAsignatura,$clave,$valor); break;
 				
 				case 'TEXTO': case 'AREA': case 'RADIO': case 'LISTA':			
