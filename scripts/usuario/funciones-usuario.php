@@ -37,7 +37,7 @@
 	  		header('Location: ver-usuarios.php');
 	  		break;
 	  	case "Profesor":
-	  		header('Location: guias.php');
+	  		header('Location: asignaturas.php');
 	  		break;
 	  	case "Alumno":
 	  		header('Location: guia.php');
