@@ -8,7 +8,6 @@
 
 /*Gran parte del codigo de este archivo no es el codigo final, solo se hizo para
   probar la pagina. */
-session_start();
 
 require_once( __DIR__. '/cabecera.php' );
 
@@ -16,8 +15,8 @@ require_once( __DIR__. '/cabecera.php' );
 
 		<?php $offset = obtener_offset(); ?>
 		
-		<?php //$imagenes = obtener_imagenes($_GET, 14, $offset-1); ?>
-        <?php $imagenes = obtener_imagenes( obtener_imagenes_bd(), 14, $offset-1); ?>
+		<?php $imagenes = obtener_imagenes($_GET, 14, $offset-1); ?>
+        <?php //$imagenes = obtener_imagenes( obtener_imagenes_bd(), 14, $offset-1); ?>
             
 		<?php 
 		//global $usuario;
@@ -171,7 +170,7 @@ require_once( __DIR__. '/cabecera.php' );
 
 			<div class="contenedor-paginacion">
 
-				<?php echo obtener_paginacion_galeria(obtener_total_imagenes(), 14, $offset); ?>
+				<?php echo obtener_paginacion_galeria(obtener_total_imagenes($imagenes), 14, $offset); ?>
 
 			</div>
 

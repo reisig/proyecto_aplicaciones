@@ -52,7 +52,7 @@ create table Repositorio(
 	Aumento int(11) default null,
     Fecha date default null,
 	RutaDibujo varchar(300) default null,
-	primary key(Id),
+	primary key(Id)
 );
 
 /*preguntas.tipo_respuesta: TITULO, TEXTO, AREA, MULTIPLE*/
