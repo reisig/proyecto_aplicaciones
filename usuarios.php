@@ -12,10 +12,26 @@
         <link href="css/guia.css" rel="stylesheet">
 
 		<?php
-			require('scripts/conexion.php');
+			/*LUIS
+			require_once(__DIR__. '/scripts/cargar.php');	
 			
-            $rutProfesor = $_GET['rut'];
+			$tipo = "";
+			
+			if(isset($_SESSION['user'])){
+				$usr = usuarioActual();
+				$tipo = $usr->tipoUsuario;
+				$rutProfesor = $usr->rut;
+			}
+			*/
+			
+			/*GONZALO*/
+			
+		    /*Datos de conexion*/
+
+			require('scripts/conexion.php');
+			$rutProfesor = $_GET['rut'];
 			$idAsignatura = $_GET['id'];
+			
 			
             //$rutProfesor = '15302958-k';
 			//$idAsignatura = 1;

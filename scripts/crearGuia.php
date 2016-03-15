@@ -1,7 +1,7 @@
 <?php
 
 	/*Datos de conexion*/
-    require_once('conexion.php');
+    require('conexion.php');
 
 	/*Recuperamos datos para crear la guia*/
 	
