@@ -18,12 +18,25 @@
 		
 		<?php
 		
+			/*LUIS
+			require_once(__DIR__. '/scripts/cargar.php');
+			$tipo ="";
+			
+			if(isset($_SESSION['user'])){
+				$usr = usuarioActual();
+				$tipo = $usr->tipoUsuario;
+				$rutProfesor = $usr->rut;
+			}*/
+	
+			/*GONZALO*/
+			
 			/*Datos de conexion*/
+
 			require('scripts/conexion.php');
-        
-            $idAsignatura  = $_GET['id'];
-            $rutProfesor = $_GET['rut'];
-        
+			
+			$idAsignatura  = $_GET['id'];
+			$rutProfesor = $_GET['rut'];
+			 
             //$idAsignatura = 1;
             //$rutProfesor = '15302958-k';
         

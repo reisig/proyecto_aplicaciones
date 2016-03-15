@@ -1,7 +1,7 @@
 <?php 
 			
 	/*Datos de conexion*/
-	require_once('conexion.php');
+	require('conexion.php');
 	
 	/*Recuperar preguntas seleecionadas del arreglo y la decodifico*/
 

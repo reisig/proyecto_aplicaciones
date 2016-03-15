@@ -15,14 +15,26 @@
         <script src="js/bootstrap.min.js"></script>
 
         <?php
-            require('scripts/conexion.php');
+            /*LUIS		
+			require_once(__DIR__. '/scripts/cargar.php');
+			
+			if(isset($_SESSION['user'])){
+				$usr = usuarioActual();
+				$tipo = $usr->tipoUsuario;
+				$rutProfesor = $usr->rut;
+			}
+			*/
+			
+			/*GONZALO*/
+			
+			require('scripts/conexion.php');
             include 'scripts/tipoPreguntas.php';
 
             $rutProfesor = $_GET['rut'];
             $idAsignatura  = $_GET['idA'];
             $idGuia = $_GET['idG'];
             $modo = $_GET['modo'];
-			
+					
             //$rutProfesor = '15302958-k';
             //$idAsignatura  = 1;
             //$idGuia = 1;
@@ -330,7 +342,7 @@
                 }
 				
 				if ($modo == 'RESOLVER'){
-					
+
 					infoGuia($rutProfesor,$idAsignatura,$idGuia);
 				}
 				

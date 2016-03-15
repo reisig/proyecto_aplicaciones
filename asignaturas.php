@@ -20,12 +20,24 @@
         </script>
         
         <?php 
-            /*Datos de conexion*/
-            require('scripts/conexion.php');
-        
-            //$rutProfesor = $_GET['rut']; //Viene de login
+
+			/*LUIS
+			require_once(__DIR__. '/scripts/cargar.php');
+			
+			$tipo = "";
+			
+			if(isset($_SESSION['user'])){
+				$usr = usuarioActual();
+				$tipo = $usr->tipoUsuario;
+				$rutProfesor = $usr->rut;
+			}*/
+			
+			/*GONZALO*/
+			
+			/*Datos de conexion*/
+			require('scripts/conexion.php');
+			//$rutProfesor = $_GET['rut'];
             $rutProfesor = '15302958-k';
-        
             //print "<h3>Rut_Profesor: ".$rutProfesor."</h3>";
         
             function listadoAsignatura($idAsignatura, $asignatura, $rutProfesor){
@@ -46,8 +58,8 @@
                 print    "</div>";    
             }
         
-            function menuAsignatura($idAsignatura, $asignatura){
-                print "<li><a href=\"usuarios.php?id=".$idAsignatura."\">".$asignatura."</a></li>";
+            function menuAsignatura($idAsignatura, $asignatura, $rut){
+                print "<li><a href=\"usuarios.php?id=".$idAsignatura."&rut=".$rut."\">".$asignatura."</a></li>";
                 
             }
         ?>
@@ -106,7 +118,7 @@
                                     
                                     <?php 
                                         for($i=0; $i<count($asignaturas);$i++){
-                                            menuAsignatura($idAsignatura[$i],$asignaturas[$i]);
+                                            menuAsignatura($idAsignatura[$i],$asignaturas[$i],$rutProfesor);
                                         }
                                     ?>
                                     
