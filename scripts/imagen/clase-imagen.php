@@ -10,7 +10,7 @@
 class Imagen{
     
     var $id; // identificador de la imagen
-    var $rut_alumno; // rut del alumno que subio la imagen
+    var $autor; // rut del alumno que subio la imagen
     var $ruta; // ruta desde donde se cargara la imagen
     var $descripcion_breve; // descripcion sobre la imagen subida
     var $tipo_tenido; // teñido utlizado en la muestra de la imagen
@@ -22,11 +22,11 @@ class Imagen{
     var $ancho; // ancho de la imagen
     var $alto; // alto de la imagen
     
-    function __construct( $id, $rut_alumno, $ruta, $descripcion_breve, $tipo_tenido, $preparacion, $diametro, $aumento, $ruta_dibujo, $fecha)
+    function __construct( $id, $autor, $ruta, $descripcion_breve, $tipo_tenido, $preparacion, $diametro, $aumento, $ruta_dibujo, $fecha)
     {
         $this->id = $id;
         $this->ruta = $ruta;
-        $this->rut_alumno = $rut_alumno;
+        $this->autor = $autor;
         $this->descripcion_breve = $descripcion_breve;
         $this->tipo_tenido = $tipo_tenido;
         $this->preparacion = $preparacion;
@@ -51,9 +51,9 @@ class Imagen{
         return $this->ruta;
     }
     
-    function get_rut()
+    function get_autor()
     {
-        return $this->rut_alumno;
+        return $this->autor;
     }
     
     function get_descripcion()
@@ -115,9 +115,9 @@ class Imagen{
         $this->ruta = $ruta;
     }
     
-    function set_rut( $rut_alumno )
+    function set_autor( $autor )
     {
-        $this->rut_alumno = $rut_alumno;
+        $this->autor = $autor;
     }
     
     function set_descripcion( $descripcion_breve )

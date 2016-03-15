@@ -191,7 +191,7 @@ function obtener_imagenes_galeria( $imagenes ) {
 					$html .= '<div class="detalle"><strong>Tinción usada: </strong><span>'.$imagen->get_tenido().'</span></div>';
 					$html .= '<div class="detalle"><strong>Diámetro del campo: </strong><span>'.$imagen->get_diametro().'µ</span></div>';
 					$html .= '<div class="detalle"><strong>Aumento total: </strong><span>'.$imagen->get_aumento().'x</span></div>';
-					$html .= '<div class="detalle"><strong>Autor: </strong><span>'.$imagen->get_rut().'</span></div>';
+					$html .= '<div class="detalle"><strong>Autor: </strong><span>'.$imagen->get_autor().'</span></div>';
 					$html .= '<div class="detalle"><strong>Fecha: </strong><span>'.$imagen->get_fecha().'</span></div>';
 
 				$html .= '</figcaption>';
@@ -545,10 +545,16 @@ function obtener_filtros() {
  *
  * @return int
  */
+/*
 function obtener_total_imagenes() {
 	global $imagenes_prueba;
 
 	return count($imagenes_prueba);
+}*/
+
+function obtener_total_imagenes( $imagenes_bd ) {
+
+	return count($imagenes_bd);
 }
 
 /**
@@ -590,7 +596,7 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
  
  * @return array
 */
-
+/*
 function obtener_imagenes_bd()
 {
     //crear la conexion
@@ -606,14 +612,14 @@ function obtener_imagenes_bd()
     }
     
     //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
-    $stmt = $conn->prepare("SELECT Id,RutAlumno,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC");
+    $stmt = $conn->prepare("SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC");
     $stmt->execute();
     
     //pasar los datos a un array
     while( $fila = $stmt->fetch()){
         /*
         echo $fila['Id'];
-        echo $fila['RutAlumno'];
+        echo $fila['Autor'];
         echo $fila['Ruta'];
         echo $fila['DescripcionBreve'];
         echo $fila['Preparacion'];
@@ -628,14 +634,17 @@ function obtener_imagenes_bd()
         
         echo $ancho;
         echo $alto;
-        */
-        $fotosGaleria[] = new Imagen($fila['Id'],$fila['RutAlumno'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
+        
+        $fotosGaleria[] = new Imagen($fila['Id'],$fila['Autor'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
     }
     
     // retornar el array con las imagenes
+    $contador = count($fotosGaleria);
+    echo $contador;
     return $fotosGaleria;
-}
+}*/
 
+/*
 function obtener_imagenes( $imagenes, $numero, $offset = 0 ) {
     //echo "<pre>";
         //printr_r($filtros);    
@@ -657,5 +666,150 @@ function obtener_imagenes( $imagenes, $numero, $offset = 0 ) {
 	}
 
 	return $resultado;
-}
+}*/
 
+function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
+    //echo "<pre>";
+        //printr_r($filtros);    
+    //echo "</pre>";
+    /*    
+	global $imagenes_prueba;
+
+	$resultado = array();
+    */
+    
+	if( $offset > 0 ) {
+		$offset *= $numero;
+		$numero += $offset;
+	} else if( $offset < 0 ) {
+		$offset = 0;
+	}
+
+    /*
+	for ($i=$offset; $i < $numero; $i++) { 
+		$resultado[] = $imagenes_prueba[$i];
+	}*/
+
+	//return $resultado;
+    
+    if( isset( $filtros )  == false )
+    {
+    
+    $consulta = '';
+    $aux='';
+
+    foreach( $filtros[ preparacion_de ] as $preparacion)
+    {
+        if (strcmp( $consulta, $aux ) == 0) {
+                $consulta.= "SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Preparacion = ".$preparacion." ORDER BY Fecha DESC";
+        }
+        else{
+            $consulta.= "OR SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Preparacion = ".$preparacion." ORDER BY Fecha DESC";
+        }
+    }
+
+    foreach( $filtros[ 'tincion_usada' ] as $tincion )
+    {
+        if (strcmp($consulta, $aux) == 0) {
+                $consulta.= "SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE TipoTenido = ".$tincion." ORDER BY Fecha DESC";
+        }
+        else{
+            $consulta.= "OR SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE TipoTenido = ".$tincion." ORDER BY Fecha DESC";
+        }
+    }
+
+    foreach( $filtros[ 'diametro_campo' ] as $diametro )
+    {
+        if (strcmp($consulta, $aux) == 0) {
+                $consulta.= "SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Diametro = ".$diametro." ORDER BY Fecha DESC";
+        }
+        else{
+            $consulta.= "OR SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Diametro = ".$diametro." ORDER BY Fecha DESC";
+        }
+    }
+
+    foreach( $filtros[ 'aumento_total' ] as $aumento )
+    {
+        if (strcmp($consulta, $aux) == 0) {
+                $consulta.= "SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Aumento = ".$aumento." ORDER BY Fecha DESC";
+        }
+        else{
+            $consulta.= "OR SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio WHERE Aumento = ".$aumento." ORDER BY Fecha DESC";
+	   }
+    }
+    
+    //crear la conexion
+    $usuario_bd = 'root';
+    $passwd_bd = '1234';
+    try {
+    //	print "Conectando";
+        $conn = new PDO('mysql:host=localhost;dbname=biologia;charset=utf8', $usuario_bd, $passwd_bd);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        print "¡Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+    
+    echo $consulta;
+    
+    //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
+    $stmt = $conn->prepare( $consulta. ' LIMIT '. $offset. ',' . $numero );
+    $stmt->execute();
+    
+    while( $fila = $stmt->fetch()){
+    $fotosGaleria[] = new Imagen($fila['Id'],$fila['Autor'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
+    }
+    
+    // retornar el array con las imagenes
+    //$contador = count($fotosGaleria);
+    //echo $contador;
+    return $fotosGaleria;
+    }
+    
+    else
+    {
+        //echo "No hay filtros";
+        $usuario_bd = 'root';
+        $passwd_bd = '1234';
+        try {
+        //	print "Conectando";
+            $conn = new PDO('mysql:host=localhost;dbname=biologia;charset=utf8', $usuario_bd, $passwd_bd);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            print "¡Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
+
+        //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
+        $stmt = $conn->prepare("SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC LIMIT " . $offset. ',' . $numero);
+        $stmt->execute();
+
+        //pasar los datos a un array
+        while( $fila = $stmt->fetch()){
+            /*
+            echo $fila['Id'];
+            echo $fila['Autor'];
+            echo $fila['Ruta'];
+            echo $fila['DescripcionBreve'];
+            echo $fila['Preparacion'];
+            echo $fila['Diametro'];
+            echo $fila['Aumento'];
+            echo $fila['FechaFormato'];
+            echo $fila['RutaDibujo'];
+
+            $foto = getimagesize( $fila['Ruta'] );
+            $ancho = $foto[0]; // se guarda el ancho de la imagen
+            $alto = $foto[1]; // se guarda el alto de la imagen 
+
+            echo $ancho;
+            echo $alto;*/
+
+            $fotosGaleria[] = new Imagen($fila['Id'],$fila['Autor'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
+        }
+
+        // retornar el array con las imagenes
+        //$contador = count($fotosGaleria);
+        //echo $contador;
+        return $fotosGaleria;
+    }
+}
