@@ -739,21 +739,8 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
     }
     
     //crear la conexion
-    $usuario_bd = 'root';
-    $passwd_bd = '1234';
-    try {
-    //	print "Conectando";
-        $conn = new PDO('mysql:host=localhost;dbname=biologia;charset=utf8', $usuario_bd, $passwd_bd);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        print "¡Error!: " . $e->getMessage() . "<br/>";
-        die();
-    }
-    
-    echo $consulta;
-    
-    //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
-    $stmt = $conn->prepare( $consulta. ' LIMIT '. $offset. ',' . $numero );
+    $_db = dbc::instance();
+    $stmt = $_db->prepare( $consulta. ' LIMIT '. $offset. ',' . $numero );
     $stmt->execute();
     
     while( $fila = $stmt->fetch()){
@@ -769,19 +756,8 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
     else
     {
         //echo "No hay filtros";
-        $usuario_bd = 'root';
-        $passwd_bd = '1234';
-        try {
-        //	print "Conectando";
-            $conn = new PDO('mysql:host=localhost;dbname=biologia;charset=utf8', $usuario_bd, $passwd_bd);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "¡Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
-
-        //consulta que obtiene los datos de las imagenes ordenadas desde la fecha mas actual hasta la mas antigua
-        $stmt = $conn->prepare("SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC LIMIT " . $offset. ',' . $numero);
+        $_db = dbc::instance();
+        $stmt = $_db->prepare("SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC LIMIT " . $offset. ',' . $numero);
         $stmt->execute();
 
         //pasar los datos a un array
