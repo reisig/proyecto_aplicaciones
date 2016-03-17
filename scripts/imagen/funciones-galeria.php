@@ -552,9 +552,36 @@ function obtener_total_imagenes() {
 	return count($imagenes_prueba);
 }*/
 
-function obtener_total_imagenes( $imagenes_bd ) {
+function obtener_total_imagenes() {
+    global $consulta;
+    
+    $_db = dbc::instance();
+    $stmt = $_db->prepare( 'SELECT '. $consulta);
+    $stmt->execute();
+    
+    while( $fila = $stmt->fetch()){
+            /*
+            echo $fila['Id'];
+            echo $fila['Autor'];
+            echo $fila['Ruta'];
+            echo $fila['DescripcionBreve'];
+            echo $fila['Preparacion'];
+            echo $fila['Diametro'];
+            echo $fila['Aumento'];
+            echo $fila['FechaFormato'];
+            echo $fila['RutaDibujo'];
 
-	return count($imagenes_bd);
+            $foto = getimagesize( $fila['Ruta'] );
+            $ancho = $foto[0]; // se guarda el ancho de la imagen
+            $alto = $foto[1]; // se guarda el alto de la imagen 
+
+            echo $ancho;
+            echo $alto;*/
+
+            $fotosConsulta[] = new Imagen($fila['Id'],$fila['Autor'],$fila['Ruta'],$fila['DescripcionBreve'],$fila['TipoTenido'],$fila['Preparacion'],$fila['Diametro'],$fila['Aumento'],$fila['RutaDibujo'],$fila['FechaFormato']);
+        }
+    
+	return count($fotosConsulta);
 }
 
 /**
@@ -756,8 +783,10 @@ function obtener_imagenes( $filtros, $numero, $offset = 0 ) {
     else
     {
         //echo "No hay filtros";
+        global $consulta;
+        $consulta .= "Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC";
         $_db = dbc::instance();
-        $stmt = $_db->prepare("SELECT Id,Autor,Ruta,DescripcionBreve,TipoTenido,Preparacion,Diametro,Aumento,DATE_FORMAT(Fecha, '%d/%m/%y') AS FechaFormato, RutaDibujo FROM Repositorio ORDER BY Fecha DESC LIMIT " . $offset. ',' . $numero);
+        $stmt = $_db->prepare( 'SELECT '. $consulta. ' LIMIT ' . $offset. ',' . $numero);
         $stmt->execute();
 
         //pasar los datos a un array

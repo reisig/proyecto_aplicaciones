@@ -170,7 +170,7 @@ require_once( __DIR__. '/cabecera.php' );
 
 			<div class="contenedor-paginacion">
 
-				<?php echo obtener_paginacion_galeria(obtener_total_imagenes($imagenes), 14, $offset); ?>
+				<?php echo obtener_paginacion_galeria(obtener_total_imagenes(), 14, $offset); ?>
 
 			</div>
 
